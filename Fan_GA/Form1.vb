@@ -6,7 +6,7 @@
         Public Tdata() As Double
     End Structure
 
-    Public Tschets(41) As Tmodel            'was 43 (T1B and Bohl removed)
+    Public Tschets(42) As Tmodel
 
     'Motor gegevens (basis ABB - LC M2BA series / HV HXR series)
     '===========================================================
@@ -227,17 +227,23 @@
 
         ListView1.View = View.SmallIcon
 
-        '-------Fill combobox, group------------------
+        '-------Fill motor combobox, group------------------
         Dim words() As String
         Dim separators() As String = {";"}
 
         For hh = 0 To emotor.Length - 1
-            words = emotor(hh).Split(separators, StringSplitOptions.None) 'Split first line the read file content
-            'Fill combobox 
-            ComboBox1.Items.Add(words(1))
+            words = emotor(hh).Split(separators, StringSplitOptions.None)
+            ComboBox1.Items.Add(words(1)) 'Fill combobox 
         Next hh
-
         ComboBox1.SelectedIndex = 0
+
+        '--------Fill combobox, Fan Tmodels------
+        Fill_array_T_schetsen()
+
+        For hh = 0 To Tschets.Length - 1
+            ComboBox3.Items.Add(Tschets(hh).Tname) 'Fill combobox 
+        Next hh
+        ComboBox3.SelectedIndex = 4
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -257,11 +263,53 @@
         TextBox14.Text = words(9)
         TextBox5.Text = words(10)
     End Sub
+    Private Sub ComboBox3_SelectedIndexChanged_1(sender As Object, e As EventArgs) Handles ComboBox3.SelectedIndexChanged
+        Update_dimensions()
+    End Sub
+    Private Sub Update_dimensions()
+        Dim factor As Double
+        Dim dia_tschets As Double
+        Dim dia_actual As Double
+
+        If ComboBox3.SelectedIndex > -1 Then
+            dia_actual = NumericUpDown1.Value
+            dia_tschets = Tschets(ComboBox3.SelectedIndex).Tdata(0)
+            factor = dia_actual / dia_tschets
+            TextBox34.Text = factor.ToString("0.000")
+
+            TextBox1.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(0) * factor).ToString("0")  'Dia waaier
+            TextBox2.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(3) * factor).ToString("0")  'Zuimond dia
+            TextBox18.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(4) * factor).ToString("0") 'Persmond lengte
+            TextBox19.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(5) * factor).ToString("0") 'Breedte huis
+            TextBox20.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(15) * factor).ToString("0") 'Breedte uitwendig
+            'TextBox21.Text = Tschets(ComboBox3.SelectedIndex).Tdata(5).ToString("0")
+            'TextBox22.Text = Tschets(ComboBox3.SelectedIndex).Tdata(6).ToString("0")
+            'TextBox23.Text = Tschets(ComboBox3.SelectedIndex).Tdata(7).ToString
+            'TextBox24.Text = Tschets(ComboBox3.SelectedIndex).Tdata(8).ToString
+            'TextBox25.Text = Tschets(ComboBox3.SelectedIndex).Tdata(9).ToString
+            'TextBox26.Text = Tschets(ComboBox3.SelectedIndex).Tdata(10).ToString
+            'TextBox27.Text = Tschets(ComboBox3.SelectedIndex).Tdata(11).ToString
+            'TextBox28.Text = Tschets(ComboBox3.SelectedIndex).Tdata(12).ToString
+            'TextBox29.Text = Tschets(ComboBox3.SelectedIndex).Tdata(13).ToString
+            'TextBox30.Text = Tschets(ComboBox3.SelectedIndex).Tdata(14).ToString
+            'TextBox31.Text = Tschets(ComboBox3.SelectedIndex).Tdata(15).ToString
+            'TextBox32.Text = Tschets(ComboBox3.SelectedIndex).Tdata(16).ToString
+            'TextBox33.Text = Tschets(ComboBox3.SelectedIndex).Tdata(17).ToString
+        End If
+    End Sub
 
     Private Sub Fill_array_T_schetsen()
         Dim q As Integer
-
         q = 0
+        Tschets(q).Tname = "Test"
+        Tschets(q).Tdata = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21}
+
+        '------- get data from database--------------------------
+        '0-Diameter,1-Toerental,2-Dichtheid,3-Zuigmond diameter,4-Persmond lengte,5-Breedte huis,6-Lengte spiraal,
+        '7-a,8-b,9-c,10-d,11-e, 12-Schoeplengte,13-Aantal schoepen,14-Breedte inwendig,15-Breedte uitwendig,
+        '16-Keeldiameter,17-Inw. dia. schoepen,18-Intrede hoek,19-Uittrede hoek, 20-zijoppervlakfan
+
+        q += 1
         Tschets(q).Tname = "T1A"
         Tschets(q).Tdata = {1000, 1480, 1.205, 605.4, 832.4, 373.0, 6075.7, 702.7, 881.1, 1063.8, 878.9, 1295.1, 364.3, 12, 133.0, 133.0, 524.3, 605.4, 30, 30, 3.101816}
         q += 1
@@ -319,10 +367,10 @@
         Tschets(q).Tname = "T31E"
         Tschets(q).Tdata = {1000, 1480, 1.205, 770.4, 857.5, 521.1, 6229.6, 791.6, 878.6, 1060.7, 877.3, 1306.1, 403.0, 8, 310.0, 215.0, 567.3, 606.9, 20, 30, 3.155667}
         q += 1
-        Tschets(q).Tname = "T33+"  'Airfoil
+        Tschets(q).Tname = "T33+"
         Tschets(q).Tdata = {1000, 1480, 1.205, 1013.2, 857.5, 637.2, 6229.6, 791.6, 877.3, 1060.7, 877.3, 1306.1, 411.6, 8, 314.0, 233.5, 659.6, 688.7, 10, 30, 3.155667}
         q += 1
-        Tschets(q).Tname = "T34"   'Airfoil opnieuw uitgerekend van oranje boek
+        Tschets(q).Tname = "T34"
         Tschets(q).Tdata = {1000, 1480, 1.205, 1013.2, 857.5, 693.9, 6229.6, 791.6, 877.3, 1060.7, 877.3, 1306.1, 411.6, 8, 370.7, 290.2, 659.6, 688.7, 10, 30, 3.155667}
         q += 1
         Tschets(q).Tname = "T35A"
@@ -351,11 +399,6 @@
         q += 1
         Tschets(q).Tname = "E-serie"
         Tschets(q).Tdata = {905, 1450, 1.205, 906, 932, 607, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 339, 8, 284, 211, 597.5, 623, 60, 30, 2.45}
-
-        '------- get data from database--------------------------
-        '0-Diameter,1-Toerental,2-Dichtheid,3-Zuigmond diameter,4-Persmond lengte,5-Breedte huis,6-Lengte spiraal,
-        '7-a,8-b,9-c,10-d,11-e, 12-Schoeplengte,13-Aantal schoepen,14-Breedte inwendig,15-Breedte uitwendig,
-        '16-Keeldiameter,17-Inw. dia. schoepen,18-Intrede hoek,19-Uittrede hoek, 20-zijoppervlakfan
         q += 1
         Tschets(q).Tname = "K-06S"   ' "K11.05.06S"
         Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 6, 30, 30, 171, 180, 60, 30, 2.45}
@@ -394,5 +437,11 @@
         Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 16, 45, 45, 171, 180, 60, 30, 2.45}
     End Sub
 
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
+        Update_dimensions()
+    End Sub
 
+    Private Sub NumericUpDown2_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown2.ValueChanged
+        Update_dimensions()
+    End Sub
 End Class
