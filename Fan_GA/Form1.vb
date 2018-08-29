@@ -1,12 +1,4 @@
 ﻿Public Class Form1
-    Public Structure Tmodel
-        Public Tname As String              'Name
-        '0-Diameter,1-Toerental,2-Dichtheid,3-Zuigmond diameter,4-Persmond lengte,5-Breedte huis,6-Lengte spiraal,7-a,8-b,9-c,10-d,11-e,
-        '12-Schoeplengte,13-Aantal schoepen,14-Breedte inwendig,15-Breedte uitwendig,16-Keeldiameter,17-Inw. dia. schoepen,18-Intrede hoek,19-Uittrede hoek......
-        Public Tdata() As Double
-    End Structure
-
-    Public Tschets(42) As Tmodel
 
     'Motor gegevens (basis ABB - LC M2BA series / HV HXR series)
     '===========================================================
@@ -166,6 +158,37 @@
     "750;2000;630L;3525;80;747;14125;180;1400;200;6kV,3ph,50Hz"
     }
 
+    '"1=Type (T20)
+    '2=waaier_diameter(635)
+    '3=Pers_flens_Lengte(362)
+    '4=Pers_flens_Breedte(175)
+    '5=Pers_flens_as_vert(450)
+    '6=pers_flens-as_hor(466)
+    '7=Keel_dia(247)
+    '8=Zuig_Flens_dia(300)
+    '9=as_Vert(476)
+    '10=breedte_huis(545)
+
+    Public Shared fan_dim() As String = {
+    "T01;925;770;345;650;813;485;560;815;984",
+    "T12;613;600;300;420;552;465;550;560;706",
+    "T16;1030;370;190;710;650;248;300;686;750",
+    "T17;745;650;300;460;624;465;550;548;726",
+    "T20;635;362;175;450;466;247;300;476;545",
+    "T21;450;303;225;280;332;282;340;318;380",
+    "T25;758;650;345;600;665;430;584;666;804",
+    "T26;703;308;150;440;468;204;246;488;540",
+    "T27;805;280;148;545;498;203;230;522;565",
+    "T28;660;315;250;425;425;425;315;466;523",
+    "T30;758;650;345;600;665;430;584;665;804",
+    "T31;758;650;345;600;665;430;584;666;804",
+    "T32;758;650;345;600;665;430;584;664;804",
+    "T33;758;650;483;600;665;500;768;665;804",
+    "T34;758;650;526;600;665;500;768;665;804",
+    "T35;600;200;105;475;390;225;140;442;456",
+    "T36;760;435;250;540;557;336;398;570;653",
+    "GW(A);485;76;40;300;260;62;62;278;278",
+    "Galak;1200;665;300;820;875;435;500;1018;886"}
 
     '"Motor voetL;W",
     Public Shared motor_foot() As String = {
@@ -208,7 +231,7 @@
             .Size = New Size(150, 150)
         }
 
-        Dim bm As Bitmap = Image.FromFile("C:\Repos\Fan_GA\BD.png")
+        'Dim bm As Bitmap = Image.FromFile("C:\Repos\Fan_GA\BD.png")
 
         Me.Controls.Add(ListView1)
         'Creating the list items
@@ -238,10 +261,9 @@
         ComboBox1.SelectedIndex = 0
 
         '--------Fill combobox, Fan Tmodels------
-        Fill_array_T_schetsen()
-
-        For hh = 0 To Tschets.Length - 1
-            ComboBox3.Items.Add(Tschets(hh).Tname) 'Fill combobox 
+        For hh = 0 To fan_dim.Length - 1
+            words = fan_dim(hh).Split(separators, StringSplitOptions.None)
+            ComboBox3.Items.Add(words(0)) 'Fill combobox 
         Next hh
         ComboBox3.SelectedIndex = 4
     End Sub
@@ -270,171 +292,50 @@
         Dim factor As Double
         Dim dia_tschets As Double
         Dim dia_actual As Double
+        Dim words() As String
+        Dim separators() As String = {";"}
+        Dim wd, zf, f1, f2, f3 As Double
 
-        If ComboBox3.SelectedIndex > -1 Then
+        If ComboBox3.SelectedIndex > 0 Then
+            words = fan_dim(ComboBox3.SelectedIndex).Split(separators, StringSplitOptions.None)
             dia_actual = NumericUpDown1.Value
-            dia_tschets = Tschets(ComboBox3.SelectedIndex).Tdata(0)
+            dia_tschets = CDbl(words(1))
             factor = dia_actual / dia_tschets
             TextBox34.Text = factor.ToString("0.000")
 
-            TextBox1.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(0) * factor).ToString("0")  'Dia waaier
-            TextBox2.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(3) * factor).ToString("0")  'Zuimond dia
-            TextBox18.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(4) * factor).ToString("0") 'Persmond lengte
-            TextBox19.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(5) * factor).ToString("0") 'Breedte huis
-            TextBox20.Text = (Tschets(ComboBox3.SelectedIndex).Tdata(15) * factor).ToString("0") 'Breedte uitwendig
-            'TextBox21.Text = Tschets(ComboBox3.SelectedIndex).Tdata(5).ToString("0")
-            'TextBox22.Text = Tschets(ComboBox3.SelectedIndex).Tdata(6).ToString("0")
-            'TextBox23.Text = Tschets(ComboBox3.SelectedIndex).Tdata(7).ToString
-            'TextBox24.Text = Tschets(ComboBox3.SelectedIndex).Tdata(8).ToString
-            'TextBox25.Text = Tschets(ComboBox3.SelectedIndex).Tdata(9).ToString
-            'TextBox26.Text = Tschets(ComboBox3.SelectedIndex).Tdata(10).ToString
-            'TextBox27.Text = Tschets(ComboBox3.SelectedIndex).Tdata(11).ToString
-            'TextBox28.Text = Tschets(ComboBox3.SelectedIndex).Tdata(12).ToString
-            'TextBox29.Text = Tschets(ComboBox3.SelectedIndex).Tdata(13).ToString
-            'TextBox30.Text = Tschets(ComboBox3.SelectedIndex).Tdata(14).ToString
-            'TextBox31.Text = Tschets(ComboBox3.SelectedIndex).Tdata(15).ToString
-            'TextBox32.Text = Tschets(ComboBox3.SelectedIndex).Tdata(16).ToString
-            'TextBox33.Text = Tschets(ComboBox3.SelectedIndex).Tdata(17).ToString
+            '"1=Type (T20)
+            '2=waaier_diameter(635)
+            '3=Pers_flens_Lengte(362)
+            '4=Pers_flens_Breedte(175)
+            '5=Pers_flens_as_vert(450)
+            '6=pers_flens-as_hor(466)
+            '7=Keel_dia(247)
+            '8=Zuig_Flens_dia(300)
+            '9=as_Vert(476)
+            '10=breedte_huis(545)
+
+
+            wd = CDbl(words(1))  'waaier
+            zf = CDbl(words(8))  'Zuimond dia
+            f1 = CDbl(words(3))   'Persflens Lengte
+            f2 = CDbl(words(4))  'Persflens Breedte
+            f3 = CDbl(words(5))   'Persflens-shaft
+
+            TextBox1.Text = (wd * factor).ToString("0")
+            TextBox2.Text = (zf * factor).ToString("0")  'Zuimond dia
+            TextBox18.Text = (f1 * factor).ToString("0") 'Persflens Lengte
+            TextBox19.Text = (f2 * factor).ToString("0") 'Persflens Breedte
+            TextBox20.Text = (f3 * factor).ToString("0") 'Persflens-shaft
+            ''TextBox21.Text = words(1)
+            'TextBox22.Text = words(1)
+            'TextBox23.Text = words(1)
+            'TextBox24.Text = words(1)
+            'TextBox25.Text = words(1)
+            'TextBox26.Text = words(1)
+            'TextBox27.Text = words(1)
+            'TextBox28.Text = words(1)
+
         End If
-    End Sub
-
-    Private Sub Fill_array_T_schetsen()
-        Dim q As Integer
-        q = 0
-        Tschets(q).Tname = "Test"
-        Tschets(q).Tdata = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21}
-
-        '------- get data from database--------------------------
-        '0-Diameter,1-Toerental,2-Dichtheid,3-Zuigmond diameter,4-Persmond lengte,5-Breedte huis,6-Lengte spiraal,
-        '7-a,8-b,9-c,10-d,11-e, 12-Schoeplengte,13-Aantal schoepen,14-Breedte inwendig,15-Breedte uitwendig,
-        '16-Keeldiameter,17-Inw. dia. schoepen,18-Intrede hoek,19-Uittrede hoek, 20-zijoppervlakfan
-
-        q += 1
-        Tschets(q).Tname = "T1A"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 605.4, 832.4, 373.0, 6075.7, 702.7, 881.1, 1063.8, 878.9, 1295.1, 364.3, 12, 133.0, 133.0, 524.3, 605.4, 30, 30, 3.101816}
-        q += 1
-        Tschets(q).Tname = "T1E"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 617.3, 814.8, 370.4, 5679.0, 685.2, 866.7, 1045.7, 859.3, 1044.4, 385.2, 12, 129.6, 129.6, 512.3, 592.6, 30, 30, 3.101816}
-        q += 1
-        Tschets(q).Tname = "T12A."  'Updated with T-schets
-        Tschets(q).Tdata = {1000, 1465, 1.2, 897.2, 978.8, 489.4, 6107.7, 685.2, 913.5, 1151.7, 901.3, 1390.7, 243.1, 12, 187.6, 187.6, 758.6, 783.0, 21, 30, 3.475345}
-        q += 1
-        Tschets(q).Tname = "T16B"
-        Tschets(q).Tdata = {1000, 1465, 1.205, 291.3, 359.2, 184.5, 4708.7, 689.3, 666.0, 728.2, 631.6, 811.2, 469.4, 10, 32.5, 14.6, 240.8, 289.3, 45, 40, 1.603017}
-        q += 1
-        Tschets(q).Tname = "T17B.."
-        Tschets(q).Tdata = {1000, 1480, 1.205, 738.3, 872.5, 402.7, 5704.7, 617.4, 735.6, 974.5, 837.6, 1273.8, 351.7, 12, 134.2, 134.2, 624.2, 644.3, 27, 30, 2.637289}
-        q += 1
-        Tschets(q).Tname = "T20B"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 472.4, 570.1, 275.6, 5275.6, 708.7, 749.6, 859.1, 733.9, 1018.9, 433.1, 10, 126.8, 71.7, 389.0, 442.5, 29, 40, 2.173719}
-        q += 1
-        Tschets(q).Tname = "T21E"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 755.6, 673.3, 500.0, 5044.4, 622.2, 706.7, 844.4, 736.9, 1073.6, 242.2, 8, 160.0, 124.4, 626.7, 640.0, 35, 59, 2.082895}
-        q += 1
-        Tschets(q).Tname = "T21F"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 755.6, 673.3, 500.0, 5044.4, 622.2, 706.7, 844.4, 736.9, 1073.6, 242.2, 16, 160.0, 124.4, 626.7, 640.0, 35, 59, 2.082826}
-        q += 1
-        Tschets(q).Tname = "T22B"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 964.9, 905.3, 659.6, 4666.7, 666.7, 731.6, 912.3, 649.1, 1101.8, 243.9, 24, 321.1, 271.9, 800.0, 800.0, 20, 25, 2.326601}
-        q += 1
-        Tschets(q).Tname = "T22C"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 964.9, 905.3, 659.6, 4666.7, 666.7, 731.6, 912.3, 649.1, 1101.8, 243.9, 12, 321.1, 271.9, 800.0, 800.0, 20, 25, 2.326601}
-        q += 1
-        Tschets(q).Tname = "T25B"
-        Tschets(q).Tdata = {758, 1465, 1.205, 584.0, 650.0, 345.0, 4766.0, 600.0, 665.6, 804.2, 665.0, 990.0, 220.0, 12, 194.0, 122.0, 430.0, 460.0, 30, 31, 2.326601}
-        q += 1
-        Tschets(q).Tname = "T26."
-        Tschets(q).Tdata = {1000, 1480, 1.205, 349.9, 438.1, 213.4, 5689.9, 625.9, 694.2, 768.1, 666.4, 885.5, 470.8, 10, 60.7, 28.9, 290.2, 331.4, 40, 40, 1.703013}
-        q += 1
-        Tschets(q).Tname = "T27" 'Orange book data
-        Tschets(q).Tdata = {1000, 1480, 1.205, 285.7, 347.8, 183.9, 4596.3, 677.0, 648.9, 701.9, 618.6, 792.5, 414.3, 16, 54.7, 23.6, 288.2, 511.8, 44, 60, 1.521398}
-        q += 1
-        Tschets(q).Tname = "T28"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 477.3, 477.3, 378.8, 4742.4, 643.9, 706.1, 792.4, 643.9, 882.6, 421.2, 8, 234.8, 151.5, 643.9, 369.7, 0, 0, 1.862612}
-        q += 1
-        Tschets(q).Tname = "T31A"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 770.4, 857.5, 422.2, 6229.6, 791.6, 878.6, 1060.7, 877.3, 1306.1, 403.0, 8, 197.9, 102.9, 567.3, 606.9, 20, 30, 3.155667}
-        q += 1
-        Tschets(q).Tname = "T31B"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 770.4, 857.5, 422.2, 6229.6, 791.6, 878.6, 1060.7, 877.3, 1306.1, 403.0, 8, 213.7, 118.7, 567.3, 606.9, 20, 30, 3.155667}
-        q += 1
-        Tschets(q).Tname = "T31C."
-        Tschets(q).Tdata = {1000, 1480, 1.205, 770.4, 857.5, 455.1, 6229.6, 791.6, 878.6, 1060.7, 877.3, 1306.1, 403.0, 8, 246.7, 151.7, 567.3, 606.9, 20, 30, 3.155667}
-        q += 1
-        Tschets(q).Tname = "T31D"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 770.4, 857.5, 521.1, 6229.6, 791.6, 878.6, 1060.7, 877.3, 1306.1, 403.0, 8, 278.4, 183.4, 567.3, 606.9, 20, 30, 3.155667}
-        q += 1
-        Tschets(q).Tname = "T31E"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 770.4, 857.5, 521.1, 6229.6, 791.6, 878.6, 1060.7, 877.3, 1306.1, 403.0, 8, 310.0, 215.0, 567.3, 606.9, 20, 30, 3.155667}
-        q += 1
-        Tschets(q).Tname = "T33+"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 1013.2, 857.5, 637.2, 6229.6, 791.6, 877.3, 1060.7, 877.3, 1306.1, 411.6, 8, 314.0, 233.5, 659.6, 688.7, 10, 30, 3.155667}
-        q += 1
-        Tschets(q).Tname = "T34"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 1013.2, 857.5, 693.9, 6229.6, 791.6, 877.3, 1060.7, 877.3, 1306.1, 411.6, 8, 370.7, 290.2, 659.6, 688.7, 10, 30, 3.155667}
-        q += 1
-        Tschets(q).Tname = "T35A"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 233.3, 333.3, 175.0, 5016.7, 792.0, 736.7, 760.0, 650.0, 816.7, 433.3, 8, 108.3, 33.3, 375.0, 133.3, 0, 0, 1.87903}
-        q += 1
-        Tschets(q).Tname = "T35B"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 233.3, 333.3, 175.0, 5016.7, 792.0, 736.7, 760.0, 650.0, 816.7, 433.3, 8, 108.3, 50.0, 375.0, 133.3, 0, 0, 1.87903}
-        q += 1
-        Tschets(q).Tname = "T35D"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 303.3, 333.3, 175.0, 5016.7, 1208.3, 736.7, 760.0, 650.0, 816.7, 433.3, 8, 108.3, 50.0, 375.0, 133.3, 0, 0, 2.102013}
-        q += 1
-        Tschets(q).Tname = "T36"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 523.7, 572.4, 328.9, 5657.9, 710.5, 750.0, 859.2, 733.6, 1019.7, 425.0, 10, 156.6, 62.5, 442.1, 464.5, 29, 40, 2.175123}
-        q += 1
-        Tschets(q).Tname = "T36A."
-        Tschets(q).Tdata = {1000, 1480, 1.205, 523.7, 572.4, 328.9, 5657.9, 710.5, 750.0, 859.2, 733.6, 1019.7, 425.0, 10, 133.6, 62.5, 442.1, 464.5, 29, 40, 2.175123}
-        q += 1
-        Tschets(q).Tname = "GALAK"
-        Tschets(q).Tdata = {1200, 1465, 1.2, 500, 665, 300, 5500, 820, 886, 1018, 875, 1208, 408, 16, 120.0, 60.0, 455, 500, 38.4, 71.0, 2.100496}
-        q += 1
-        Tschets(q).Tname = "GW+"
-        Tschets(q).Tdata = {1000, 1480, 1.205, 127.8, 156.7, 82.5, 4117.5, 618.6, 573.2, 573.2, 536.1, 614.4, 416.5, 12, 20.6, 8.2, 127.8, 167.0, 65, 90, 1.016747}
-        q += 1
-        Tschets(q).Tname = "GWA+"
-        Tschets(q).Tdata = {1355, 1480, 1.205, 127.8, 156.7, 82.5, 4117.5, 618.6, 1191.8, 573.2, 536.1, 577.3, 492.1, 12, 20.6, 8.2, 127.8, 167.0, 90, 50, 1.016747}
-        q += 1
-        Tschets(q).Tname = "E-serie"
-        Tschets(q).Tdata = {905, 1450, 1.205, 906, 932, 607, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 339, 8, 284, 211, 597.5, 623, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-06S"   ' "K11.05.06S"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 6, 30, 30, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-06M"    '"K11.05.06M"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 6, 30, 30, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-06B"    '"K11.05.06B"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 6, 30, 30, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-08S"    '"K11.05.08S"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 8, 30, 30, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-08M"    '"K11.05.08M"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 8, 37.5, 37.5, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-08B"    '"K11.05.08B"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 8, 45, 45, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-12S"    '"K11.05.12S"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 12, 30, 30, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-12M"    '"K11.05.12M"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 12, 37.5, 37.5, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-12B"    '"K11.05.12B"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 12, 45, 45, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-16S"    '"K11.05.16S"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 16, 30, 30, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-16M"    '"K11.05.16M"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 16, 37.5, 37.5, 171, 180, 60, 30, 2.45}
-        q += 1
-        Tschets(q).Tname = "K-16B"    '"K11.05.16B"
-        Tschets(q).Tdata = {279, 2930, 1.205, 210, 245, 110, 4257, 618.6, 1191.8, 573.2, 536.1, 577.3, 164, 16, 45, 45, 171, 180, 60, 30, 2.45}
     End Sub
 
     Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
@@ -444,4 +345,5 @@
     Private Sub NumericUpDown2_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown2.ValueChanged
         Update_dimensions()
     End Sub
+
 End Class
