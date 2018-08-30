@@ -7,8 +7,8 @@
     "3000;1,1;80M;285;58;2850;17;19;135;35;400v,3ph,50Hz",
     "3000;1,5;90S;310;61;2850;21;24;140;35;400v,3ph,50Hz",
     "3000;2,2;90L;335;61;2850;24;24;165;35;400v,3ph,50Hz",
-    "3000;3;100L; 380;65;2870;33;28;180;38;400v,3ph,50Hz",
-    "3000;4;112M; 380;67;2900;42;28;190;50;400v,3ph,50Hz",
+    "3000;3;100L;380;65;2870;33;28;180;38;400v,3ph,50Hz",
+    "3000;4;112M;380;67;2900;42;28;190;50;400v,3ph,50Hz",
     "3000;5,5;132S;465;70;2920;58;38;205;55;400v,3ph,50Hz",
     "3000;7,5;132S;465;70;2920;63;38;205;55;400v,3ph,50Hz",
     "3000;11;160M;645;69;2930;105;42;299;60;400v,3ph,50Hz",
@@ -157,17 +157,66 @@
     "750;1800;630L;3525;80;747;13250;180;1400;200;6kV,3ph,50Hz",
     "750;2000;630L;3525;80;747;14125;180;1400;200;6kV,3ph,50Hz"
     }
+    '============= ABB MOTOR SIZES ========================
+    'ABB M3BA Industrial performance cast iron motors (pag 104)
+    Public Shared ABB_dimen() As String = {
+    "Size;A;AA;AB;AC;AE;AF;B;BA;BB;BC;C;CA;CB;D-Tol.;DA;DB;DC;E;EA;EG;EH;F;FA;G;GA;GB;GC;H",
+    "71;112;24;136;139;97;139;90;24;110;24;45;104;10;14-j6;11;M5;M4;30;23;12.5;10;5;4;11;16;8.5;12.5;71",
+    "80;125;28;154;157;97;157;100;28;125;28;50;136;12.5;19-j6;14;M6;M5;40;30;16;12.5;6;5;15.5;21.5;11;16;80",
+    "90S;140;30;170;177;110;177;100;30;150;55;56;156.5;12.5;24-j6;14;M8;M5;50;30;19;12.5;8;5;20;27;11;16;90",
+    "90L;140;30;170;177;110;177;125;30;150;55;56;131.5;12.5;24-j6;14;M8;M5;50;30;19;12.5;8;5;20;27;11;16;90",
+    "100;160;38;200;197;110;197;140;34;172;34;63;123;16;28-j6;19;M10;M6;60;40;22;16;8;6;24;31;15.5;21.5;100",
+    "112;190;41;230;197;110;197;140;34;172;34;70;138;16;28-j6;19;M10;M6;60;40;22;16;8;6;24;31;15.5;21.5;112",
+    "132S;216;47;262;261;160;261;140;40;212;76;89;228;16;38-k6;24;M12;M8;80;50;28;19;10;8;33;41;20;27;132",
+    "132M;216;47;262;261;160;261;178;40;212;76;89;190;16;38-k6;24;M12;M8;80;50;28;19;10;8;33;41;20;27;132"
+    }
+    '============= ROUND INLET FLANGE ===================
+    Public Shared DIN24154R2() As String = {
+    "Nominaal;Diam. Uitw.;Diam. Inw.;Diam. Stc;Diam.Gtn;Atl Gtn;Flensdikte;Flensbrdte",
+    "DN71;133;73;110;9,5;4;6;30",
+    "DN80;142;82;118;9,5;4;6;30",
+    "DN90;152;92;128;9,5;4;6;30",
+    "DN100;162;102;139;9,5;4;6;30",
+    "DN112;175;115;151;9,5;4;6;30",
+    "DN125;187;127;165;9,5;4;6;30",
+    "DN140;212;142;182;11,5;8;6;35",
+    "DN160;232;162;200;11,5;8;6;35",
+    "DN180;252;182;219;11,5;8;6;35",
+    "DN200;273;203;241;11,5;8;6;35",
+    "DN224;297;227;265;11,5;8;6;35",
+    "DN250;323;253;292;11,5;8;6;35",
+    "DN280;363;283;332;11,5;8;8;40",
+    "DN315;398;318;366;11,5;8;8;40",
+    "DN355;438;358;405;11,5;8;8;40",
+    "DN400;484;404;448;11,5;12;8;40",
+    "DN450;534;454;497;11,5;12;8;40",
+    "DN500;584;504;551;11,5;12;8;40",
+    "DN560;664;564;629;14;16;8;50",
+    "DN630;734;634;698;14;16;8;50",
+    "DN710;814;714;775;14;16;8;50",
+    "DN800;904;804;861;14;24;8;50",
+    "DN900;1004;904;958;14;24;8;50",
+    "DN1000;1105;1005;1067;14;24;8;50",
+    "DN1120;1245;1125;1200;18;32;10;60",
+    "DN1250;1375;1255;1337;18;32;10;60",
+    "DN1400;1525;1405;1475;18;32;10;60",
+    "DN1600;1725;1605;1675;18;40;10;60",
+    "DN1800;1925;1805;1875;18;40;10;60",
+    "DN2000;2125;2005;2073;18;40;10;60"
+    }
 
-    '"1=Type (T20)
-    '2=waaier_diameter(635)
-    '3=Pers_flens_Lengte(362)
-    '4=Pers_flens_Breedte(175)
-    '5=Pers_flens_as_vert(450)
-    '6=pers_flens-as_hor(466)
-    '7=Keel_dia(247)
-    '8=Zuig_Flens_dia(300)
-    '9=as_Vert(476)
-    '10=breedte_huis(545)
+
+    '================ FAN DIMENSIONS =======================
+    '0=Type (T20)
+    '1=waaier_diameter(635)
+    '2=Pers_flens_Lengte(362)
+    '3=Pers_flens_Breedte(175)
+    '4=Pers_flens_as_vert(450)
+    '5=pers_flens-as_hor(466)
+    '6=Keel_dia(247)
+    '7=Zuig_Flens_dia(300)
+    '8=as_Vert(476)
+    '9=breedte_huis(545)
 
     Public Shared fan_dim() As String = {
     "T01;925;770;345;650;813;485;560;815;984",
@@ -190,12 +239,12 @@
     "GW(A);485;76;40;300;260;62;62;278;278",
     "Galak;1200;665;300;820;875;435;500;1018;886"}
 
-    '"Motor voetL;W",
+    '"Motor-foot;L;W",
     Public Shared motor_foot() As String = {
     "80M;135;35",
     "90S;140;35",
     "90L;165;35",
-    "100L;180;0",
+    "100L;180;38",
     "112M;190;50",
     "132S;205;55",
     "132M;240;55",
@@ -294,7 +343,6 @@
         Dim dia_actual As Double
         Dim words() As String
         Dim separators() As String = {";"}
-        Dim wd, zf, f1, f2, f3 As Double
 
         If ComboBox3.SelectedIndex > 0 Then
             words = fan_dim(ComboBox3.SelectedIndex).Split(separators, StringSplitOptions.None)
@@ -303,37 +351,24 @@
             factor = dia_actual / dia_tschets
             TextBox34.Text = factor.ToString("0.000")
 
-            '"1=Type (T20)
-            '2=waaier_diameter(635)
-            '3=Pers_flens_Lengte(362)
-            '4=Pers_flens_Breedte(175)
-            '5=Pers_flens_as_vert(450)
-            '6=pers_flens-as_hor(466)
-            '7=Keel_dia(247)
-            '8=Zuig_Flens_dia(300)
-            '9=as_Vert(476)
-            '10=breedte_huis(545)
+            '0=Type (T20)
+            '1=waaier_diameter(635)
+            '2=Pers_flens_Lengte(362)
+            '3=Pers_flens_Breedte(175)
+            '4=Pers_flens_as_vert(450)
+            '5=pers_flens-as_hor(466)
+            '6=Keel_dia(247)
+            '7=Zuig_Flens_dia(300)
+            '8=as_Vert(476)
+            '9=breedte_huis(545)
 
-
-            wd = CDbl(words(1))  'waaier
-            zf = CDbl(words(8))  'Zuimond dia
-            f1 = CDbl(words(3))   'Persflens Lengte
-            f2 = CDbl(words(4))  'Persflens Breedte
-            f3 = CDbl(words(5))   'Persflens-shaft
-
-            TextBox1.Text = (wd * factor).ToString("0")
-            TextBox2.Text = (zf * factor).ToString("0")  'Zuimond dia
-            TextBox18.Text = (f1 * factor).ToString("0") 'Persflens Lengte
-            TextBox19.Text = (f2 * factor).ToString("0") 'Persflens Breedte
-            TextBox20.Text = (f3 * factor).ToString("0") 'Persflens-shaft
-            ''TextBox21.Text = words(1)
-            'TextBox22.Text = words(1)
-            'TextBox23.Text = words(1)
-            'TextBox24.Text = words(1)
-            'TextBox25.Text = words(1)
-            'TextBox26.Text = words(1)
-            'TextBox27.Text = words(1)
-            'TextBox28.Text = words(1)
+            TextBox1.Text = (CDbl(words(1)) * factor).ToString("0")
+            TextBox2.Text = (CDbl(words(8)) * factor).ToString("0")  'Zuimond dia
+            TextBox18.Text = (CDbl(words(2)) * factor).ToString("0") 'Persflens Lengte
+            TextBox19.Text = (CDbl(words(3)) * factor).ToString("0") 'Persflens Breedte
+            TextBox20.Text = (CDbl(words(4)) * factor).ToString("0") 'Persflens-shaft
+            TextBox21.Text = (CDbl(words(9)) * factor).ToString("0") 'E
+            TextBox22.Text = (CDbl(words(8)) * factor).ToString("0") 'H
 
         End If
     End Sub
