@@ -172,37 +172,39 @@
     "132M;216;47;262;261;160;261;178;40;212;76;89;190;16;38-k6;24;M12;M8;80;50;28;19;10;8;33;41;20;27;132"
     }
     '============= HFB Blocklagers =========================
-    Public Shared HFB() As String = {
-    "Kurzz;da;D;H;HI;H2;L;J;N;A;I.2;J1;b;Lager;kg;scheibe;rpm;Erstfullung;Nachsmierung;s;x;L3",
-    "BL25;25;62;50;95;16;155;120;11,5;218;184;135;41;6305;6,5;AS62;11000;50;5;14;7;108",
-    "BL30;30;72;50;100;18;170;130;15;300;266;210;50;6306;8;AS72;9000;60;5;14;7;186",
-    "BL35;35;80;60;120;20;190;150;15;330;296;240;50;6307;9;AS80;8500;80;5;16;7;208",
-    "BL40;40;90;60;120;20;190;150;15;330;296;240;50;6308;10;AS90;7500;110;10;16;7;204",
-    "BL40S;40;90;60;120;20;190;150;15;450;416;360;50;6308;16;AS90;7500;110;10;16;7;324",
-    "BL45;45;100;70;140;23;190;150;15;365;331;263;60;6309;14;AS100;6700;140;10;16;7;235",
-    "BL45/K;45;100;70;140;28;200;160;16;260;226;165;64;6309;12;AS100;6700;140;10;16;7;130",
-    "BL45/H;45;85;60;118;20;190;150;15;305;282;200;42;6209;14;AS85;7500;120;10;8;15;198",
-    "BL50;50;110;70;140;23;190;150;15;365;331;263;60;6310;13;AS110;6300;190;10;16;7;231",
-    "BL50S;50;110;70;140;23;190;150;15;550;516;448;60;6310;21;AS110;6300;190;10;16;7;416",
-    "BLC50;50;110;80;150;22;230;175;18;455;421;375;75;6310;15;AS110;6300;190;10;16;7;321",
-    "BL55;55;120;80;160;25;210;170;20;405;371;295;70;6311;22;AS120;5600;240;15;16;6;269",
-    "BL60;60;130;80;160;25;210;170;20;405;371;295;70;6312;21;AS130;5000;300;15;16;6;265",
-    "BL60SS;60;130;80;160;25;210;170;20;740;706;595;65;6312;35;AS130;5000;300;15;16;6;600",
-    "BLC60;60;130;95;175;25;260;200;20;515;481;420;75;6312;25;AS130;5000;300;15;16;6;375",
-    "BLK60;60;130;80;160;22;224;190;15;365;349;263;62;6312;21;AS130;5000;300;15;16;12;231",
-    "BL70;70;150;95;190;28;270;210;24;450;416;330;80;6314;31;AS150;4500;480;20;20;6;294",
-    "BL75;75;160;95;190;28;270;210;24;450;416;330;80;6315;32;AS160;4300;590;20;20;6;290",
-    "BL80;80;170;112;217;30;290;230;24;490;450;350;75;6316;50;AS170;3800;700;20;20;6;320",
-    "BLK80;80;170;105;210;30;300;250;20;395;375;295;70;6316;44;AS170;3800;700;20;20;15;227",
-    "BLL80;80;170;120;240;35;335;280;24;590;566;450;88;6316;75;AS170;3800;700;20;20;16;416",
-    "BLK90;90;190;120;240;35;355;280;24;440;416;330;78;6318;64;AS190;3400;1000;25;20;16;258",
-    "BLL90;90;190;120;240;35;335;280;24;590;566;450;88;6318;85;AS190;3400;1000;25;20;16;408",
-    "BL95;95;200;125;245;35;340;280;24;540;500;400;80;6319;60;AS200;3200;1150;30;25;6;348",
-    "BL100;100;215;145;290;40;400;335;24;590;562;450;104;6320;95;AS215;3000;1450;35;25;16;386",
-    "BL110;110;240;145;290;40;400;335;24;590;562;450;104;6322;86;AS240;2600;1900;40;25;16;380"
+    'https://www.hfb-waelzlager.de/media/Englisch%20Plummer%20Block%20Housings/bl.pdf
+    Public Shared HFB_BL() As String = {
+    "Kurzz;da;D;H;HI;H2;L;J;N;A;I.2;J1;b;Lager;kg;scheibe;rpm;Erstfullung;Nachsmierung;s;x;L3;L1",
+    "BL25;25;62;50;95;16;155;120;11,5;218;184;135;41;6305;6,5;AS62;11000;50;5;14;7;108;358",
+    "BL30;30;72;50;100;18;170;130;15;300;266;210;50;6306;8;AS72;9000;60;5;14;7;186;470",
+    "BL35;35;80;60;120;20;190;150;15;330;296;240;50;6307;9;AS80;8500;80;5;16;7;208;530",
+    "BL40;40;90;60;120;20;190;150;15;330;296;240;50;6308;10;AS90;7500;110;10;16;7;204;530",
+    "BL40S;40;90;60;120;20;190;150;15;450;416;360;50;6308;16;AS90;7500;110;10;16;7;324;530",
+    "BL45;45;100;70;140;23;190;150;15;365;331;263;60;6309;14;AS100;6700;140;10;16;7;235;575",
+    "BL45/K;45;100;70;140;28;200;160;16;260;226;165;64;6309;12;AS100;6700;140;10;16;7;130;575",
+    "BL45/H;45;85;60;118;20;190;150;15;305;282;200;42;6209;14;AS85;7500;120;10;8;15;198;575",
+    "BL50;50;110;70;140;23;190;150;15;365;331;263;60;6310;13;AS110;6300;190;10;16;7;231;585",
+    "BL50S;50;110;70;140;23;190;150;15;550;516;448;60;6310;21;AS110;6300;190;10;16;7;416;585",
+    "BLC50;50;110;80;150;22;230;175;18;455;421;375;75;6310;15;AS110;6300;190;10;16;7;321;585",
+    "BL55;55;120;80;160;25;210;170;20;405;371;295;70;6311;22;AS120;5600;240;15;16;6;269;645",
+    "BL60;60;130;80;160;25;210;170;20;405;371;295;70;6312;21;AS130;5000;300;15;16;6;265;645",
+    "BL60SS;60;130;80;160;25;210;170;20;740;706;595;65;6312;35;AS130;5000;300;15;16;6;600;645",
+    "BLC60;60;130;95;175;25;260;200;20;515;481;420;75;6312;25;AS130;5000;300;15;16;6;375;645",
+    "BLK60;60;130;80;160;22;224;190;15;365;349;263;62;6312;21;AS130;5000;300;15;16;12;231;645",
+    "BL70;70;150;95;190;28;270;210;24;450;416;330;80;6314;31;AS150;4500;480;20;20;6;294;755",
+    "BL75;75;160;95;190;28;270;210;24;450;416;330;80;6315;32;AS160;4300;590;20;20;6;290;755",
+    "BL80;80;170;112;217;30;290;230;24;490;450;350;75;6316;50;AS170;3800;700;20;20;6;320;805",
+    "BLK80;80;170;105;210;30;300;250;20;395;375;295;70;6316;44;AS170;3800;700;20;20;15;227;805",
+    "BLL80;80;170;120;240;35;335;280;24;590;566;450;88;6316;75;AS170;3800;700;20;20;16;416;805",
+    "BLK90;90;190;120;240;35;355;280;24;440;416;330;78;6318;64;AS190;3400;1000;25;20;16;258;935",
+    "BLL90;90;190;120;240;35;335;280;24;590;566;450;88;6318;85;AS190;3400;1000;25;20;16;408;935",
+    "BL95;95;200;125;245;35;340;280;24;540;500;400;80;6319;60;AS200;3200;1150;30;25;6;348;985",
+    "BL100;100;215;145;290;40;400;335;24;590;562;450;104;6320;95;AS215;3000;1450;35;25;16;386;985",
+    "BL110;110;240;145;290;40;400;335;24;590;562;450;104;6322;86;AS240;2600;1900;40;25;16;380;985"
 }
     '=========ZGLO OIL Blocklagers======================
-    Public Shared ZGLO() As String = {
+    'http://www.hfb.it/eng/pdf/ZLGOe.pdf
+    Public Shared HFB_ZGLO() As String = {
     "Gehause;d;d2;d3;d4;d9;A;B;C;L1;H;HI;L;E;EI;L2;L3;s;los lager;vast lager;nut;blech;kg;Oil",
     "ZLGO40A;40;50;42;37;M40x1,5;290;295;40;250;80;165;380;230;235;410;135;M16;NU308-C3;6308-C3;KM8;MB8;23;0.9",
     "ZLGO45A;45;55;47;40;M45x1,5;290;295;40;250;80;165;380;230;235;410;135;M16;NU309-C3;6309-C3;KM9;MB9;24;0.9",
@@ -324,9 +326,23 @@
     "630L;1400;200"
     }
 
+    'See http://www.escogroup.com/sites/default/files/datasheet/dmu.pdf
+    Public Shared Escodisc_DMU() As String = {
+    "type;dmax;dmin;Tn;Tp;rpm1;rpm2;deg;mm;mm;wr2;kg;A;B;D;E;G;H;K;L;S;X;*;8",
+    "DMU_38-45;45;0;190;290;8000;16000;2x0.75;2.4;0.8;0.0015;3.08;170;88;58.5;35;100;6.7;21;41;70.6;86.6",
+    "DMU_45-55;55;0;330;500;6800;13600;2x0.5;2.0;0.8;4.0;4.98;190;102;69.5;45;100;6.5;37;61;71;87",
+    "DMU_55-65;65;0;750;1120;6000;12000;2x0.5;2.4;0.8;8.0;8.0;200;123;82;50;100;7;48;72;64;86",
+    "DMU_65-75;75;25;1330;2000;5000;10000;2x0.5;2.6;0.8;18;12.05;220;147;97.5;60;100;9;54;86;60;82",
+    "DMU_75-90;90;32;2200;3320;4300;8600;2x0.5;3.0;1.1;0.04;20.12;280;166;113;70;140;10;65;98;88;120",
+    "DMU_85-105;105;38;3500;5200;3600;7200;2x0.5;4.0;1.1;84;30.65;310;192;132;85;140;13;76;116;80;114",
+    "DMU_95-105;105;45;5600;8400;3200;6400;2x0.5;4.0;1.1;136;39.5;330;224;133;95;140;14;94;134;76;112",
+    "DMU_110-120;120;55;8000;12000;2800;5600;2x0.5;4.4;1.4;262;59.8;400;244;154;110;180;15.5;108;156;103;149",
+    "DMU_125-135;135;65;10900;16400;2500;5000;2x0.5;5.2;1.4;434;79.04;430;273;175;125;180;19;123;171;96;142",
+    "DMU_140-160;160;65;14200;21200;2300;4600;2x0.5;6.6;2.0;779;115.5;530;303;196;140;250;20;143;191;160;210",
+    "DMU_160-185;185;80;19800;29600;2000;4000;2x0.5;6.8;2.0;1.436;163.6;570;340;228;160;250;20;165;221;154;210"
+    }
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-
         Dim ListView1 As ListView
         ListView1 = New ListView With {
             .Location = New Point(10, 10),
@@ -362,12 +378,34 @@
         Next hh
         ComboBox1.SelectedIndex = 0
 
+        '-------Fill Coupling, group------------------
+        For hh = 0 To Escodisc_DMU.Length - 1
+            words = Escodisc_DMU(hh).Split(separators, StringSplitOptions.None)
+            ComboBox2.Items.Add(words(0)) 'Fill combobox 
+        Next hh
+        ComboBox2.SelectedIndex = 0
+
         '--------Fill combobox, Fan Tmodels------
         For hh = 0 To fan_dim.Length - 1
             words = fan_dim(hh).Split(separators, StringSplitOptions.None)
             ComboBox3.Items.Add(words(0)) 'Fill combobox 
         Next hh
         ComboBox3.SelectedIndex = 4
+
+        '--------Fill combobox, HFB BL series bearing Block------
+        For hh = 0 To HFB_BL.Length - 1
+            words = HFB_BL(hh).Split(separators, StringSplitOptions.None)
+            ComboBox4.Items.Add(words(0)) 'Fill combobox 
+        Next hh
+        ComboBox4.SelectedIndex = 4
+
+        '--------Fill combobox, HFB BL series bearing Block------
+        For hh = 0 To HFB_ZGLO.Length - 1
+            words = HFB_ZGLO(hh).Split(separators, StringSplitOptions.None)
+            ComboBox5.Items.Add(words(0)) 'Fill combobox 
+        Next hh
+        ComboBox5.SelectedIndex = 4
+
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -387,9 +425,47 @@
         TextBox14.Text = words(9)
         TextBox5.Text = words(10)
     End Sub
+
+    Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
+        Dim words() As String
+        Dim separators() As String = {";"}
+
+        words = Escodisc_DMU(ComboBox2.SelectedIndex).Split(separators, StringSplitOptions.None)
+        TextBox7.Text = words(1)    'Max diameter
+        TextBox15.Text = words(20)  'S-maat
+        TextBox16.Text = words(11)  'Weight
+
+    End Sub
+
     Private Sub ComboBox3_SelectedIndexChanged_1(sender As Object, e As EventArgs) Handles ComboBox3.SelectedIndexChanged
         Update_dimensions()
     End Sub
+    'Grease bearing blocks
+    Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
+        Dim words() As String
+        Dim separators() As String = {";"}
+
+        words = HFB_BL(ComboBox4.SelectedIndex).Split(separators, StringSplitOptions.None)
+        TextBox30.Text = words(1)  'da shaft diameter
+        TextBox35.Text = words(2)  'Bearing OD
+        TextBox29.Text = words(4)  'Cl shaft height
+        TextBox17.Text = words(9)  'A, Housing length
+        TextBox36.Text = words(6)  'L, Housing width
+        TextBox37.Text = words(22) 'L1, Shaft length
+        TextBox38.Text = words(14) 'Weight
+        TextBox39.Text = words(13) 'Bearing
+    End Sub
+    'Oil bearing blocks
+    Private Sub ComboBox5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox5.SelectedIndexChanged
+        Dim words() As String
+        Dim separators() As String = {";"}
+
+        words = HFB_ZGLO(ComboBox4.SelectedIndex).Split(separators, StringSplitOptions.None)
+        TextBox31.Text = words(2)   'Max diameter
+        TextBox22.Text = words(2)  'CL shaft height
+        TextBox33.Text = words(2)  'Weight
+    End Sub
+
     Private Sub Update_dimensions()
         Dim factor As Double
         Dim dia_tschets As Double
@@ -433,5 +509,6 @@
     Private Sub NumericUpDown2_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown2.ValueChanged
         Update_dimensions()
     End Sub
+
 
 End Class
