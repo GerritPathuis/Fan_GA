@@ -171,7 +171,7 @@
     "132S;216;47;262;261;160;261;140;40;212;76;89;228;16;38-k6;24;M12;M8;80;50;28;19;10;8;33;41;20;27;132",
     "132M;216;47;262;261;160;261;178;40;212;76;89;190;16;38-k6;24;M12;M8;80;50;28;19;10;8;33;41;20;27;132"
     }
-    '============= HFB Blocklagers =========================
+    '============= HFB Grease Blocklagers =========================
     'https://www.hfb-waelzlager.de/media/Englisch%20Plummer%20Block%20Housings/bl.pdf
     Public Shared HFB_BL() As String = {
     "Kurzz;da;D;H;HI;H2;L;J;N;A;I.2;J1;b;Lager;kg;scheibe;rpm;Erstfullung;Nachsmierung;s;x;L3;L1",
@@ -202,28 +202,27 @@
     "BL100;100;215;145;290;40;400;335;24;590;562;450;104;6320;95;AS215;3000;1450;35;25;16;386;985",
     "BL110;110;240;145;290;40;400;335;24;590;562;450;104;6322;86;AS240;2600;1900;40;25;16;380;985"
 }
-    '=========ZGLO OIL Blocklagers======================
+    '=========HFB ZGLO OIL Blocklagers======================
     'http://www.hfb.it/eng/pdf/ZLGOe.pdf
     Public Shared HFB_ZGLO() As String = {
-    "Gehause;d;d2;d3;d4;d9;A;B;C;L1;H;HI;L;E;EI;L2;L3;s;los lager;vast lager;nut;blech;kg;Oil",
-    "ZLGO40A;40;50;42;37;M40x1,5;290;295;40;250;80;165;380;230;235;410;135;M16;NU308-C3;6308-C3;KM8;MB8;23;0.9",
-    "ZLGO45A;45;55;47;40;M45x1,5;290;295;40;250;80;165;380;230;235;410;135;M16;NU309-C3;6309-C3;KM9;MB9;24;0.9",
-    "ZLGO50A;50;60;52;45;M50x1,5;320;348;45;300;95;192;432;260;285;444;175;M16;NU310-C3;6310-C3;KM10;MB10;27;1.5",
-    "ZLGO55A;55;65;57;50;M55x2;320;348;45;300;95;192;432;260;285;444;175;M16;NU311-C3;6311-C3;KM11;MB11;30;1.5",
-    "ZLGO60A;60;70;62;55;M60x2;370;390;50;340;110;222;480;300;320;490;205;M20;NU312-C3;6312-C3;KM12;MB12;55;2.2",
-    "ZLGO65A;65;75;67;60;M65x2;370;390;50;340;110;222;480;300;320;490;205;M20;NU313-C3;6313-C3;KM13;MB13;56;2.2",
-    "ZLGO70A;70;80;72;65;M70x2;400;450;55;400;120;245;556;330;370;573;265;M20;NU314-C3;6314-C3;KM14;MB14;72;3",
-    "ZLGO75A;75;85;77;70;M75x2;400;450;55;400;120;245;556;330;370;573;265;M20;NU315-C3;6315-C3;KM15;MB15;70;3",
-    "ZLGO80A;80;90;82;75;M80x2;460;520;60;460;135;272;645;380;430;655;301;M24;NU316-C3;6316-C3;KM16;MB16;105;4",
-    "ZLGO85A;85;95;87;80;M85x2;460;520;60;460;135;272;645;380;430;655;299;M24;NU317-C3;6317-C3;KM17;MB17;120;4",
-    "ZLGO90A;90;105;92;85;M90x2;560;585;70;520;150;307;736;445;490;756;357;M36;NU318-C3;6318-C3;KM18;MB18;140;6",
-    "ZLGO95A;95;110;97;90;M95x2;560;585;70;520;150;307;736;445;490;746;357;M36;NU319-C3;6319-C3;KM19;MB19;145;6",
-    "ZLGO100A;100;115;102;95;M100x2;560;585;70;520;150;307;736;445;490;766;268;M36;NU220-C3;6220-C3;KM20;MB20;145;6",
-    "ZLGO110A;110;125;112;105;M110x2;560;585;70;520;150;307;736;445;490;746;364;M36;NU222-C3;6222-C3;KM22;MB22;150;6",
-    "ZLGO120A;120;140;122;115;M120x2;600;955;75;900;160;330;1105;480;860;1125;730;M36;NU224-C3;6224-C3;KM24;MB24;220;10",
-    "ZLGO130A;130;150;132;125;M130x2;690;830;90;750;200;397;1024;550;710;1050;554;M42;NU226-C3;6226-C3;KM26;MB26;340;18",
-    "ZLGO140A;140;160;142;135;M140x2;690;830;90;750;200;397;1024;550;710;1050;554;M24;NU228-C3;6228-C3;KM28;MB28;350;20"
+    "Gehause;d;d2;d3;d4;d9;A;B;C;L1;H;HI;L;E;EI;L2;L3;s;los lager;vast lager;nut;blech;kg;Oil;length",
+    "ZLGO40A;40;50;42;37;M40x1,5;290;295;40;250;80;165;380;230;235;410;135;M16;NU308-C3;6308-C3;KM8;MB8;23;0.9;535;",
+    "ZLGO50A;50;60;52;45;M50x1,5;320;348;45;300;95;192;432;260;285;444;175;M16;NU310-C3;6310-C3;KM10;MB10;27;1.5;612",
+    "ZLGO55A;55;65;57;50;M55x2;320;348;45;300;95;192;432;260;285;444;175;M16;NU311-C3;6311-C3;KM11;MB11;30;1.5;680",
+    "ZLGO65A;65;75;67;60;M65x2;370;390;50;340;110;222;480;300;320;490;205;M20;NU313-C3;6313-C3;KM13;MB13;56;2.2;751",
+    "ZLGO70A;70;80;72;65;M70x2;400;450;55;400;120;245;556;330;370;573;265;M20;NU314-C3;6314-C3;KM14;MB14;72;3;805",
+    "ZLGO75A;75;85;77;70;M75x2;400;450;55;400;120;245;556;330;370;573;265;M20;NU315-C3;6315-C3;KM15;MB15;70;3;",
+    "ZLGO80A;80;90;82;75;M80x2;460;520;60;460;135;272;645;380;430;655;301;M24;NU316-C3;6316-C3;KM16;MB16;105;4;960",
+    "ZLGO85A;85;95;87;80;M85x2;460;520;60;460;135;272;645;380;430;655;299;M24;NU317-C3;6317-C3;KM17;MB17;120;4;1007",
+    "ZLGO90A;90;105;92;85;M90x2;560;585;70;520;150;307;736;445;490;756;357;M36;NU318-C3;6318-C3;KM18;MB18;140;6;",
+    "ZLGO95A;95;110;97;90;M95x2;560;585;70;520;150;307;736;445;490;746;357;M36;NU319-C3;6319-C3;KM19;MB19;145;6;1094",
+    "ZLGO100A;100;115;102;95;M100x2;560;585;70;520;150;307;736;445;490;766;268;M36;NU220-C3;6220-C3;KM20;MB20;145;6;1204",
+    "ZLGO110A;110;125;112;105;M110x2;560;585;70;520;150;307;736;445;490;746;364;M36;NU222-C3;6222-C3;KM22;MB22;150;6;1142",
+    "ZLGO120A;120;140;122;115;M120x2;600;955;75;900;160;330;1105;480;860;1125;730;M36;NU224-C3;6224-C3;KM24;MB24;220;10;1142",
+    "ZLGO140A;140;160;142;135;M140x2;690;830;90;750;200;397;1024;550;710;1050;554;M24;NU228-C3;6228-C3;KM28;MB28;350;20;1375"
     }
+    '"ZLGO130A;130;150;132;125;M130x2;690;830;90;750;200;397;1024;550;710;1050;554;M42;NU226-C3;6226-C3;KM26;MB26;340;18;",
+
 
     '============= ROUND INLET FLANGE ===================
     Public Shared DIN24154R2() As String = {
@@ -342,6 +341,19 @@
     "DMU_160-185;185;80;19800;29600;2000;4000;2x0.5;6.8;2.0;1.436;163.6;570;340;228;160;250;20;165;221;154;210"
     }
 
+    Public Shared Cooling_disk() As String = {
+   "Typ;D;Dmin;d;dmax;d1;B;Bmin;b;Nmax;kgs",
+    "K-150;150;106;10;50;60;30;23;3;8900;0.7",
+    "K-200;200;106;19;50;60;30;23;3;6700;1.1",
+    "K-250;250;150;28;70;85;34;29;3;5350;1.9",
+    "K-315;315;180;38;95;112;54;39;5;4250;3.8",
+    "K-400;400;340;53;125;145;68;45;4;3350;8.6",
+    "K-400SO;400;375;120;155;170;74;45;10;3350;9",
+    "K-500;500;380;80;165;180;68;48;5;2700;12",
+    "K-630;630;500;100;200;225;78;52;5;2100;19"
+    }
+
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim ListView1 As ListView
         ListView1 = New ListView With {
@@ -406,6 +418,14 @@
         Next hh
         ComboBox5.SelectedIndex = 4
 
+        '--------Fill combobox, Cooling disk------
+        'http://www.troester-maschinenbau.de
+        For hh = 0 To Cooling_disk.Length - 1
+            words = Cooling_disk(hh).Split(separators, StringSplitOptions.None)
+            ComboBox6.Items.Add(words(0)) 'Fill combobox 
+        Next hh
+        ComboBox6.SelectedIndex = 2
+
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -460,10 +480,25 @@
         Dim words() As String
         Dim separators() As String = {";"}
 
-        words = HFB_ZGLO(ComboBox4.SelectedIndex).Split(separators, StringSplitOptions.None)
-        TextBox31.Text = words(2)   'Max diameter
-        TextBox22.Text = words(2)  'CL shaft height
-        TextBox33.Text = words(2)  'Weight
+        words = HFB_ZGLO(ComboBox5.SelectedIndex).Split(separators, StringSplitOptions.None)
+        TextBox31.Text = words(4)  'Shaft diameter
+        TextBox32.Text = words(2)  'Bearing ID
+        TextBox33.Text = words(10) 'H Shaft height
+        TextBox40.Text = words(15) 'L2 Housing length
+        TextBox41.Text = words(6)  'A Housing width
+        TextBox42.Text = words(24) 'Shaft length
+        TextBox43.Text = words(22) 'Weight
+        TextBox44.Text = words(18) 'Bearing floating
+        TextBox45.Text = words(19) 'Bearing fixed
+    End Sub
+    Private Sub ComboBox6_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox6.SelectedIndexChanged
+        Dim words() As String
+        Dim separators() As String = {";"}
+
+        words = Cooling_disk(ComboBox6.SelectedIndex).Split(separators, StringSplitOptions.None)
+        TextBox47.Text = words(3)  'Shaft diameter min
+        TextBox48.Text = words(4)  'Shaft diameter max
+        TextBox46.Text = words(6)  'Shaft diameter max
     End Sub
 
     Private Sub Update_dimensions()
@@ -498,7 +533,6 @@
             TextBox20.Text = (CDbl(words(4)) * factor).ToString("0") 'Persflens-shaft
             TextBox21.Text = (CDbl(words(9)) * factor).ToString("0") 'E
             TextBox22.Text = (CDbl(words(8)) * factor).ToString("0") 'H
-
         End If
     End Sub
 
