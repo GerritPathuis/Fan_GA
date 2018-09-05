@@ -1,5 +1,7 @@
-﻿Imports System.IO
+﻿Imports System.Globalization
+Imports System.IO
 Imports System.Math
+Imports System.Threading
 
 Public Class Form1
     Public Shared csv As String
@@ -275,27 +277,31 @@ Public Class Form1
     '7=Zuig_Flens_dia(300)
     '8=as_Vert(476)
     '9=breedte_huis(545)
+    '10= volute r1
+    '11= volute r2
+    '12= volute r3
+    '13= volute r3
 
     Public Shared fan_dim() As String = {
-    "T01;925;770;345;650;813;485;560;815;984",
-    "T12;613;600;300;420;552;465;550;560;706",
-    "T16;1030;370;190;710;650;248;300;686;750",
-    "T17;745;650;300;460;624;465;550;548;726",
-    "T20;635;362;175;450;466;247;300;476;545",
-    "T21;450;303;225;280;332;282;340;318;380",
-    "T25;758;650;345;600;665;430;584;666;804",
-    "T26;703;308;150;440;468;204;246;488;540",
-    "T27;805;280;148;545;498;203;230;522;565",
-    "T28;660;315;250;425;425;425;315;466;523",
-    "T30;758;650;345;600;665;430;584;665;804",
-    "T31;758;650;345;600;665;430;584;666;804",
-    "T32;758;650;345;600;665;430;584;664;804",
-    "T33;758;650;483;600;665;500;768;665;804",
-    "T34;758;650;526;600;665;500;768;665;804",
-    "T35;600;200;105;475;390;225;140;442;456",
-    "T36;760;435;250;540;557;336;398;570;653",
-    "GW(A);485;76;40;300;260;62;62;278;278",
-    "Galak;1200;665;300;820;875;435;500;1018;886"}
+    "T01;925;770;345;650;813;485;560;815;984; 1068;899;730;0",
+    "T12;613;600;300;420;552;465;550;560;706; 300;633;487;0",
+    "T16;1030;370;190;710;650;248;300;686;750;761;711;662;0",
+    "T17;745;650;300;460;624;465;550;548;726; 826;671;515;0",
+    "T20;635;362;175;450;466;247;300;476;545; 580;511;442;0",
+    "T21;450;303;225;280;332;282;340;318;380; 423;338;309;0",
+    "T25;758;650;345;600;665;430;584;666;804; 874;735;596;497", '4 radii
+    "T26;703;308;150;440;468;204;246;488;540; 566;514;462;410", '4 radii
+    "T27;805;280;148;545;498;203;230;522;565; 580;542;503;0",
+    "T28;660;315;250;425;425;425;315;466;523; 553;495;437;0",
+    "T30;758;650;345;600;665;430;584;665;804; 874;735;596;496", '4 radii
+    "T31;758;650;345;600;665;430;584;666;804; 874;735;596;496", '4 radii
+    "T32;758;650;345;600;665;430;584;664;804; 874;735;596;496", '4 radii
+    "T33;758;650;483;600;665;500;768;665;804; 874;735;596;496", '4 radii
+    "T34;758;650;526;600;665;500;768;665;804; 874;735;596;496", '4 radii
+    "T35;600;200;105;475;390;225;140;442;456; 473;425;0;0",     '2 radii
+    "T36;760;435;250;540;557;336;398;570;653; 694;612;529;0",
+    "GW(A);485;76;40;300;260;62;62;278;278;   278;0;0;0",       '1 radius
+    "Galak;1200;665;300;820;875;435;500;1018;886; 1086;954;822;690"}
 
     '"Motor-foot;L;W",
     Public Shared motor_foot() As String = {
@@ -364,7 +370,7 @@ Public Class Form1
             .Location = New Point(10, 10),
             .Size = New Size(150, 150)
         }
-
+        Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB")
         'Dim bm ASBitmap = Image.FromFile("C:\Repos\Fan_GA\BD.png")
 
         Me.Controls.Add(ListView1)
@@ -392,14 +398,14 @@ Public Class Form1
             words = emotor(hh).Split(separators, StringSplitOptions.None)
             ComboBox1.Items.Add(words(1)) 'Fill combobox 
         Next hh
-        ComboBox1.SelectedIndex = 0
+        ComboBox1.SelectedIndex = 1
 
         '-------Fill Coupling, group------------------
         For hh = 0 To Escodisc_DMU.Length - 1
             words = Escodisc_DMU(hh).Split(separators, StringSplitOptions.None)
             ComboBox2.Items.Add(words(0)) 'Fill combobox 
         Next hh
-        ComboBox2.SelectedIndex = 0
+        ComboBox2.SelectedIndex = 1
 
         '--------Fill combobox, Fan Tmodels------
         For hh = 0 To fan_dim.Length - 1
@@ -537,6 +543,12 @@ Public Class Form1
             TextBox20.Text = (CDbl(words(4)) * factor).ToString("0") 'Persflens-shaft
             TextBox21.Text = (CDbl(words(9)) * factor).ToString("0") 'E
             TextBox22.Text = (CDbl(words(8)) * factor).ToString("0") 'H
+
+            TextBox21.Text = (CDbl(words(10)) * factor).ToString("0") 'Volute
+            TextBox22.Text = (CDbl(words(11)) * factor).ToString("0") 'Volute
+            TextBox23.Text = (CDbl(words(12)) * factor).ToString("0") 'Volute
+            TextBox24.Text = (CDbl(words(13)) * factor).ToString("0") 'Volute
+
         End If
     End Sub
 
@@ -549,7 +561,7 @@ Public Class Form1
     End Sub
     'Save file dialog
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Dim filename As String = "c:\Temp\TestOut.csv"
+        Dim filename As String = "c:\Temp\Onshape.csv"
         Calc_volute()
 
         If File.Exists(filename) Then
@@ -557,12 +569,12 @@ Public Class Form1
         End If
         Try
             Dim sw As New StreamWriter(filename)
-
             sw.Write(csv)
             sw.Close()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
+        MessageBox.Show(filename & " is succesfully written")
     End Sub
     Private Sub Calc_volute()
         'https://nl.wikipedia.org/wiki/Archimedes-spiraal
@@ -570,21 +582,43 @@ Public Class Form1
         'the onshape unit is meter !!
         Dim r, r1, r2 As Double
         Dim x, y, z As Double
+        '================
+        Dim pic As Bitmap = New System.Drawing.Bitmap(1000, 1000)
+        Dim nx, ny As Integer
+        Dim c As Color
+
+        c = Color.White
 
         csv = String.Empty
-        r1 = 100
-        r2 = 200
+        r1 = CDbl(TextBox27.Text)   'smal radius
+        r2 = CDbl(TextBox25.Text)   'big radius
+
         For i As Integer = 0 To 360
             r = r1 + i / 360 * (r2 - r1)
             x = r * Sin(i / 180 * PI) / 1000
             y = r * Cos(i / 180 * PI) / 1000
             z = 0.000
 
-            csv = csv & "volute" & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
+            csv = csv & "volute, " & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
+
+            nx = CInt(PictureBox16.Width / 2 + x * 100)
+            ny = CInt(PictureBox16.Height / 2 + y * 100)
+
+            If nx < 0 Then nx = 0
+            If ny < 0 Then ny = 0
+
+            If nx >= PictureBox16.Width Then nx = PictureBox16.Width
+            If ny >= PictureBox16.Height Then ny = PictureBox16.Height
+
+            pic.SetPixel(nx, ny, c)
+            PictureBox16.Image = pic
         Next
+        pic.SetPixel(CInt((PictureBox16.Width / 2)), CInt(PictureBox16.Height / 2), c)
+        PictureBox16.Image = pic
     End Sub
 
     Private Sub TabPage10_Enter(sender As Object, e As EventArgs) Handles TabPage10.Enter
+        Dim vol As Double
         TextBox49.Text = ComboBox3.SelectedItem.ToString    'Fan type
         TextBox50.Text = NumericUpDown1.Value.ToString      'diameter waaier
         TextBox51.Text = NumericUpDown2.Value.ToString      'insulation
@@ -593,5 +627,15 @@ Public Class Form1
         TextBox54.Text = ComboBox6.SelectedItem.ToString    'Cooling disk
         TextBox55.Text = ComboBox2.SelectedItem.ToString    'Coupling
         TextBox56.Text = ComboBox1.SelectedItem.ToString    'Motor
+
+        TextBox25.Text = TextBox21.Text    'Volute biggest
+        TextBox26.Text = TextBox22.Text    'Volute middle
+
+        vol = CDbl(TextBox23.Text)
+        If vol = 0 Then vol = CDbl(TextBox23.Text)
+        If vol = 0 Then vol = CDbl(TextBox22.Text)
+
+        TextBox27.Text = vol.ToString("0")    'Volute small
     End Sub
+
 End Class
