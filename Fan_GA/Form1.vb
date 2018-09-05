@@ -1,4 +1,8 @@
-﻿Public Class Form1
+﻿Imports System.IO
+Imports System.Math
+
+Public Class Form1
+    Public Shared csv As String
 
     'Motor gegevens (basis ABB - LC M2BA series / HV HXR series)
     '===========================================================
@@ -543,6 +547,51 @@
     Private Sub NumericUpDown2_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown2.ValueChanged
         Update_dimensions()
     End Sub
+    'Save file dialog
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim filename As String = "c:\Temp\TestOut.csv"
+        Calc_volute()
 
+        If File.Exists(filename) Then
+            File.Delete(filename)
+        End If
+        Try
+            Dim sw As New StreamWriter(filename)
 
+            sw.Write(csv)
+            sw.Close()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+    Private Sub Calc_volute()
+        'https://nl.wikipedia.org/wiki/Archimedes-spiraal
+        'r =r1 + t*(r2-r1)	
+        'the onshape unit is meter !!
+        Dim r, r1, r2 As Double
+        Dim x, y, z As Double
+
+        csv = String.Empty
+        r1 = 100
+        r2 = 200
+        For i As Integer = 0 To 360
+            r = r1 + i / 360 * (r2 - r1)
+            x = r * Sin(i / 180 * PI) / 1000
+            y = r * Cos(i / 180 * PI) / 1000
+            z = 0.000
+
+            csv = csv & "volute" & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
+        Next
+    End Sub
+
+    Private Sub TabPage10_Enter(sender As Object, e As EventArgs) Handles TabPage10.Enter
+        TextBox49.Text = ComboBox3.SelectedItem.ToString    'Fan type
+        TextBox50.Text = NumericUpDown1.Value.ToString      'diameter waaier
+        TextBox51.Text = NumericUpDown2.Value.ToString      'insulation
+        TextBox52.Text = ComboBox4.SelectedItem.ToString    'BL bearingblock
+        TextBox53.Text = ComboBox5.SelectedItem.ToString    'ZGLO bearingblock
+        TextBox54.Text = ComboBox6.SelectedItem.ToString    'Cooling disk
+        TextBox55.Text = ComboBox2.SelectedItem.ToString    'Coupling
+        TextBox56.Text = ComboBox1.SelectedItem.ToString    'Motor
+    End Sub
 End Class
