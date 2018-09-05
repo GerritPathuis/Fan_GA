@@ -200,6 +200,9 @@ Partial Class Form1
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.Label100 = New System.Windows.Forms.Label()
+        Me.TextBox46 = New System.Windows.Forms.TextBox()
+        Me.Label106 = New System.Windows.Forms.Label()
         Me.Label103 = New System.Windows.Forms.Label()
         Me.Label104 = New System.Windows.Forms.Label()
         Me.Label105 = New System.Windows.Forms.Label()
@@ -209,9 +212,8 @@ Partial Class Form1
         Me.Label102 = New System.Windows.Forms.Label()
         Me.ComboBox6 = New System.Windows.Forms.ComboBox()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
-        Me.Label100 = New System.Windows.Forms.Label()
-        Me.TextBox46 = New System.Windows.Forms.TextBox()
-        Me.Label106 = New System.Windows.Forms.Label()
+        Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -240,6 +242,8 @@ Partial Class Form1
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage8.SuspendLayout()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage9.SuspendLayout()
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -252,11 +256,12 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage6)
         Me.TabControl1.Controls.Add(Me.TabPage7)
         Me.TabControl1.Controls.Add(Me.TabPage8)
+        Me.TabControl1.Controls.Add(Me.TabPage9)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(800, 671)
+        Me.TabControl1.Size = New System.Drawing.Size(860, 671)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -267,7 +272,7 @@ Partial Class Form1
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(792, 645)
+        Me.TabPage1.Size = New System.Drawing.Size(852, 645)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Arrangement selection"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -415,7 +420,7 @@ Partial Class Form1
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(792, 645)
+        Me.TabPage2.Size = New System.Drawing.Size(852, 645)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Dimensions"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -887,7 +892,7 @@ Partial Class Form1
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(792, 645)
+        Me.TabPage3.Size = New System.Drawing.Size(852, 645)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Back Ground"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -919,7 +924,7 @@ Partial Class Form1
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(792, 645)
+        Me.TabPage4.Size = New System.Drawing.Size(852, 645)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Coupling"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -1076,7 +1081,7 @@ Partial Class Form1
         Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(792, 645)
+        Me.TabPage5.Size = New System.Drawing.Size(852, 645)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Motor"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -1458,7 +1463,7 @@ Partial Class Form1
         Me.TabPage6.Location = New System.Drawing.Point(4, 22)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(792, 645)
+        Me.TabPage6.Size = New System.Drawing.Size(852, 645)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Grease Bearing (BL)"
         Me.TabPage6.UseVisualStyleBackColor = True
@@ -1762,7 +1767,7 @@ Partial Class Form1
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(792, 645)
+        Me.TabPage7.Size = New System.Drawing.Size(852, 645)
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "Oil Bearing (ZGLO)"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -2065,10 +2070,37 @@ Partial Class Form1
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(792, 645)
+        Me.TabPage8.Size = New System.Drawing.Size(852, 645)
         Me.TabPage8.TabIndex = 7
         Me.TabPage8.Text = "Cooling disk"
         Me.TabPage8.UseVisualStyleBackColor = True
+        '
+        'Label100
+        '
+        Me.Label100.AutoSize = True
+        Me.Label100.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label100.Location = New System.Drawing.Point(22, 95)
+        Me.Label100.Name = "Label100"
+        Me.Label100.Size = New System.Drawing.Size(59, 18)
+        Me.Label100.TabIndex = 78
+        Me.Label100.Text = "Breedte"
+        '
+        'TextBox46
+        '
+        Me.TextBox46.Location = New System.Drawing.Point(131, 96)
+        Me.TextBox46.Name = "TextBox46"
+        Me.TextBox46.Size = New System.Drawing.Size(68, 20)
+        Me.TextBox46.TabIndex = 77
+        '
+        'Label106
+        '
+        Me.Label106.AutoSize = True
+        Me.Label106.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label106.Location = New System.Drawing.Point(205, 95)
+        Me.Label106.Name = "Label106"
+        Me.Label106.Size = New System.Drawing.Size(42, 18)
+        Me.Label106.TabIndex = 76
+        Me.Label106.Text = "[mm]"
         '
         'Label103
         '
@@ -2144,46 +2176,41 @@ Partial Class Form1
         '
         'PictureBox14
         '
+        Me.PictureBox14.Dock = System.Windows.Forms.DockStyle.Right
         Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
-        Me.PictureBox14.Location = New System.Drawing.Point(284, 136)
+        Me.PictureBox14.Location = New System.Drawing.Point(280, 3)
         Me.PictureBox14.Name = "PictureBox14"
-        Me.PictureBox14.Size = New System.Drawing.Size(502, 501)
+        Me.PictureBox14.Size = New System.Drawing.Size(569, 639)
         Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox14.TabIndex = 5
         Me.PictureBox14.TabStop = False
         '
-        'Label100
+        'TabPage9
         '
-        Me.Label100.AutoSize = True
-        Me.Label100.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label100.Location = New System.Drawing.Point(22, 95)
-        Me.Label100.Name = "Label100"
-        Me.Label100.Size = New System.Drawing.Size(59, 18)
-        Me.Label100.TabIndex = 78
-        Me.Label100.Text = "Breedte"
+        Me.TabPage9.Controls.Add(Me.PictureBox15)
+        Me.TabPage9.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage9.Name = "TabPage9"
+        Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage9.Size = New System.Drawing.Size(852, 645)
+        Me.TabPage9.TabIndex = 8
+        Me.TabPage9.Text = "Motor Support"
+        Me.TabPage9.UseVisualStyleBackColor = True
         '
-        'TextBox46
+        'PictureBox15
         '
-        Me.TextBox46.Location = New System.Drawing.Point(131, 96)
-        Me.TextBox46.Name = "TextBox46"
-        Me.TextBox46.Size = New System.Drawing.Size(68, 20)
-        Me.TextBox46.TabIndex = 77
-        '
-        'Label106
-        '
-        Me.Label106.AutoSize = True
-        Me.Label106.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label106.Location = New System.Drawing.Point(205, 95)
-        Me.Label106.Name = "Label106"
-        Me.Label106.Size = New System.Drawing.Size(42, 18)
-        Me.Label106.TabIndex = 76
-        Me.Label106.Text = "[mm]"
+        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
+        Me.PictureBox15.Location = New System.Drawing.Point(450, 27)
+        Me.PictureBox15.Name = "PictureBox15"
+        Me.PictureBox15.Size = New System.Drawing.Size(369, 274)
+        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox15.TabIndex = 6
+        Me.PictureBox15.TabStop = False
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 671)
+        Me.ClientSize = New System.Drawing.Size(860, 671)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "Form1"
         Me.Text = "Generate Fan Outline"
@@ -2222,6 +2249,8 @@ Partial Class Form1
         Me.TabPage8.ResumeLayout(False)
         Me.TabPage8.PerformLayout()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage9.ResumeLayout(False)
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2415,4 +2444,6 @@ Partial Class Form1
     Friend WithEvents Label100 As Label
     Friend WithEvents TextBox46 As TextBox
     Friend WithEvents Label106 As Label
+    Friend WithEvents TabPage9 As TabPage
+    Friend WithEvents PictureBox15 As PictureBox
 End Class
