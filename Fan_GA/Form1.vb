@@ -582,27 +582,31 @@ Public Class Form1
         'the onshape unit is meter !!
         Dim r, r1, r2 As Double
         Dim x, y, z As Double
+        Dim x0, y0 As Integer
+
         '================
         Dim pic As Bitmap = New System.Drawing.Bitmap(1000, 1000)
         Dim nx, ny As Integer
-        Dim c As Color
-
-        c = Color.White
+        Dim c As Color = Color.White
 
         csv = String.Empty
         r1 = CDbl(TextBox27.Text)   'smal radius
         r2 = CDbl(TextBox25.Text)   'big radius
 
+        x0 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+
+
         For i As Integer = 0 To 360
             r = r1 + i / 360 * (r2 - r1)
-            x = r * Sin(i / 180 * PI) / 1000
-            y = r * Cos(i / 180 * PI) / 1000
+            y = r * Sin(i / 180 * PI) / 1000
+            x = r * Cos(i / 180 * PI) / 1000
             z = 0.000
 
             csv = csv & "volute, " & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
 
-            nx = CInt(PictureBox16.Width / 2 + x * 100)
-            ny = CInt(PictureBox16.Height / 2 + y * 100)
+            nx = CInt(x0 + x * 100)
+            ny = CInt(y0 + y * 100)
 
             If nx < 0 Then nx = 0
             If ny < 0 Then ny = 0
@@ -613,9 +617,44 @@ Public Class Form1
             pic.SetPixel(nx, ny, c)
             PictureBox16.Image = pic
         Next
-        pic.SetPixel(CInt((PictureBox16.Width / 2)), CInt(PictureBox16.Height / 2), c)
+        Draw_circle(pic, 10)
+        Draw_line(pic, 10, 10, 20, 20)
+    End Sub
+    Private Sub Draw_circle(ByVal pic As Bitmap, ByVal c_radius As Double)
+        Dim x0, y0 As Integer
+        Dim c As Color = Color.White
+        Dim nx, ny As Integer
+
+        'Dim  = 10
+        x0 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+
+        For i As Integer = 0 To 360 Step 5
+            nx = CInt(x0 + (c_radius * Cos(i / 180 * PI)))
+            ny = CInt(y0 + (c_radius * Sin(i / 180 * PI)))
+
+            If nx < 0 Then nx = 0
+            If ny < 0 Then ny = 0
+            If nx >= PictureBox16.Width Then nx = PictureBox16.Width
+            If ny >= PictureBox16.Height Then ny = PictureBox16.Height
+
+            pic.SetPixel(nx, ny, c)
+            PictureBox16.Image = pic
+        Next
+    End Sub
+
+    Private Sub Draw_line(ByVal pic As Bitmap, ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer)
+        Dim x0, y0 As Integer
+        Dim g As Graphics = Graphics.FromImage(pic)
+        Dim myPen As Pen = New Pen(Color.Blue, 3)
+
+        x0 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+
+        g.DrawLine(myPen, x1 + x0, y1 + y0, x2 + x0, y2 + y0)
         PictureBox16.Image = pic
     End Sub
+
 
     Private Sub TabPage10_Enter(sender As Object, e As EventArgs) Handles TabPage10.Enter
         Dim vol As Double
