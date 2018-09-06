@@ -537,18 +537,20 @@ Public Class Form1
             '9=breedte_huis(545)
 
             TextBox1.Text = (CDbl(words(1)) * factor).ToString("0")
-            TextBox2.Text = (CDbl(words(8)) * factor).ToString("0")  'Zuimond dia
+            TextBox2.Text = (CDbl(words(8)) * factor).ToString("0")  'Zuimond hoogte
             TextBox18.Text = (CDbl(words(2)) * factor).ToString("0") 'Persflens Lengte
             TextBox19.Text = (CDbl(words(3)) * factor).ToString("0") 'Persflens Breedte
             TextBox20.Text = (CDbl(words(4)) * factor).ToString("0") 'Persflens-shaft
             TextBox21.Text = (CDbl(words(9)) * factor).ToString("0") 'E
             TextBox22.Text = (CDbl(words(8)) * factor).ToString("0") 'H
+            TextBox57.Text = (CDbl(words(5)) * factor).ToString("0")
 
             TextBox21.Text = (CDbl(words(10)) * factor).ToString("0") 'Volute
             TextBox22.Text = (CDbl(words(11)) * factor).ToString("0") 'Volute
             TextBox23.Text = (CDbl(words(12)) * factor).ToString("0") 'Volute
             TextBox24.Text = (CDbl(words(13)) * factor).ToString("0") 'Volute
 
+            TextBox28.Text = (CDbl(words(7)) * factor).ToString("0") 'Inlet flange
         End If
     End Sub
 
@@ -574,7 +576,7 @@ Public Class Form1
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-        MessageBox.Show(filename & " is succesfully written")
+        'MessageBox.Show(filename & " is succesfully written")
     End Sub
     Private Sub Calc_volute()
         'https://nl.wikipedia.org/wiki/Archimedes-spiraal
@@ -582,31 +584,35 @@ Public Class Form1
         'the onshape unit is meter !!
         Dim r, r1, r2 As Double
         Dim x, y, z As Double
+        Dim xx, yy, zz As Double
         Dim x0, y0 As Integer
-
+        Dim inlet_d As Integer
+        Dim onshape As Double = 1000 'Dimension in [m]
         '================
         Dim pic As Bitmap = New System.Drawing.Bitmap(1000, 1000)
         Dim nx, ny As Integer
         Dim c As Color = Color.White
+        Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
         csv = String.Empty
-        r1 = CDbl(TextBox27.Text)   'smal radius
-        r2 = CDbl(TextBox25.Text)   'big radius
+        Double.TryParse(TextBox27.Text, r1) 'smal radius
+        Double.TryParse(TextBox25.Text, r2) 'big radius
+        Integer.TryParse(TextBox28.Text, inlet_d) 'big radius
 
         x0 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
         y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
-
+        '======== volute =============
         For i As Integer = 0 To 360
             r = r1 + i / 360 * (r2 - r1)
-            y = r * Sin(i / 180 * PI) / 1000
-            x = r * Cos(i / 180 * PI) / 1000
+            y = r * Sin(i / 180 * PI) / onshape
+            x = r * Cos(i / 180 * PI) / onshape
             z = 0.000
 
             csv = csv & "volute, " & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
 
-            nx = CInt(x0 + x * 100)
-            ny = CInt(y0 + y * 100)
+            nx = CInt(x0 + x * pic_scale)
+            ny = CInt(y0 + y * pic_scale)
 
             If nx < 0 Then nx = 0
             If ny < 0 Then ny = 0
@@ -617,21 +623,46 @@ Public Class Form1
             pic.SetPixel(nx, ny, c)
             PictureBox16.Image = pic
         Next
-        Draw_circle(pic, 10)
-        Draw_line(pic, 10, 10, 20, 20)
+
+        '======== Outlet rectangle flange =============
+        Dim p, q, s As Double
+        Double.TryParse(TextBox20.Text, p) 'x off set inlet flange
+        Double.TryParse(TextBox57.Text, q) 'CL flange= CL shaft vertikal
+        Double.TryParse(TextBox28.Text, s) 'flange height
+        x = p / onshape
+        y = (q + s / 2) / onshape
+        z = 0.000
+        xx = x
+        yy = (q - s / 2) / onshape
+        zz = 0.000
+
+        csv = csv & "volute, " & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
+        csv = csv & "volute, " & xx.ToString("0.000") & ", " & yy.ToString("0.000") & ", " & zz.ToString("0.000") & vbCrLf
+        Draw_line(pic, CInt(x), CInt(y), CInt(xx), CInt(yy))  'Picture outlet flange
+
+        '======== inlet flange diameter =============
+        For i As Integer = 0 To 360
+            r = inlet_d / 2
+            y = r * Sin(i / 180 * PI) / onshape
+            x = r * Cos(i / 180 * PI) / onshape
+            z = 0.000
+            csv = csv & "Inlet, " & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
+        Next
+        Draw_circle(pic, inlet_d / 2)        'Picture Inlet flange
+
     End Sub
     Private Sub Draw_circle(ByVal pic As Bitmap, ByVal c_radius As Double)
         Dim x0, y0 As Integer
         Dim c As Color = Color.White
         Dim nx, ny As Integer
+        Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
-        'Dim  = 10
         x0 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
         y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
         For i As Integer = 0 To 360 Step 5
-            nx = CInt(x0 + (c_radius * Cos(i / 180 * PI)))
-            ny = CInt(y0 + (c_radius * Sin(i / 180 * PI)))
+            nx = CInt(x0 + (c_radius / 1000 * Cos(i / 180 * PI)) * pic_scale)
+            ny = CInt(y0 + (c_radius / 1000 * Sin(i / 180 * PI)) * pic_scale)
 
             If nx < 0 Then nx = 0
             If ny < 0 Then ny = 0
@@ -644,14 +675,27 @@ Public Class Form1
     End Sub
 
     Private Sub Draw_line(ByVal pic As Bitmap, ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer)
-        Dim x0, y0 As Integer
+        Dim x00, y00 As Integer
+        Dim x6, y6 As Integer
+        Dim x7, y7 As Integer
+
         Dim g As Graphics = Graphics.FromImage(pic)
         Dim myPen As Pen = New Pen(Color.Blue, 3)
+        Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
-        x0 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
-        y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+        x00 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        y00 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
-        g.DrawLine(myPen, x1 + x0, y1 + y0, x2 + x0, y2 + y0)
+        x6 = CInt(x00 + (x1 * pic_scale)) 'Start point
+        y6 = CInt(y00 + (y1 * pic_scale)) 'Start point
+
+        x7 = CInt(x00 + (x2 * pic_scale)) 'End point
+        y7 = CInt(y00 + (y2 * pic_scale)) 'End point
+
+        MessageBox.Show("Start " & x00.ToString & " " & y00.ToString)
+        MessageBox.Show("end " & x6.ToString & " " & y6.ToString)
+
+        g.DrawLine(myPen, x6, y6, x7, y7)
         PictureBox16.Image = pic
     End Sub
 
@@ -677,4 +721,11 @@ Public Class Form1
         TextBox27.Text = vol.ToString("0")    'Volute small
     End Sub
 
+    Private Sub NumericUpDown3_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown3.ValueChanged
+        Calc_volute()
+    End Sub
+
+    Private Sub TabControl1_Enter(sender As Object, e As EventArgs) Handles TabControl1.Enter
+        Calc_volute()
+    End Sub
 End Class
