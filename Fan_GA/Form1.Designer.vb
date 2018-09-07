@@ -208,6 +208,8 @@ Partial Class Form1
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.Label57 = New System.Windows.Forms.Label()
         Me.Label55 = New System.Windows.Forms.Label()
         Me.Label53 = New System.Windows.Forms.Label()
@@ -241,8 +243,7 @@ Partial Class Form1
         Me.Label109 = New System.Windows.Forms.Label()
         Me.Label108 = New System.Windows.Forms.Label()
         Me.TextBox49 = New System.Windows.Forms.TextBox()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
+        Me.Label62 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -278,11 +279,11 @@ Partial Class Form1
         Me.TabPage9.SuspendLayout()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage10.SuspendLayout()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -2173,6 +2174,7 @@ Partial Class Form1
         '
         'TabPage10
         '
+        Me.TabPage10.Controls.Add(Me.Label62)
         Me.TabPage10.Controls.Add(Me.NumericUpDown4)
         Me.TabPage10.Controls.Add(Me.Button3)
         Me.TabPage10.Controls.Add(Me.Label57)
@@ -2191,6 +2193,24 @@ Partial Class Form1
         Me.TabPage10.TabIndex = 9
         Me.TabPage10.Text = "ONSHAPE"
         Me.TabPage10.UseVisualStyleBackColor = True
+        '
+        'NumericUpDown4
+        '
+        Me.NumericUpDown4.Increment = New Decimal(New Integer() {15, 0, 0, 0})
+        Me.NumericUpDown4.Location = New System.Drawing.Point(697, 477)
+        Me.NumericUpDown4.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
+        Me.NumericUpDown4.Name = "NumericUpDown4"
+        Me.NumericUpDown4.Size = New System.Drawing.Size(75, 20)
+        Me.NumericUpDown4.TabIndex = 112
+        '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(647, 566)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.TabIndex = 111
+        Me.Button3.Text = "Button3"
+        Me.Button3.UseVisualStyleBackColor = True
         '
         'Label57
         '
@@ -2530,23 +2550,15 @@ Partial Class Form1
         Me.TextBox49.TabIndex = 83
         Me.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Button3
+        'Label62
         '
-        Me.Button3.Location = New System.Drawing.Point(647, 566)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(75, 23)
-        Me.Button3.TabIndex = 111
-        Me.Button3.Text = "Button3"
-        Me.Button3.UseVisualStyleBackColor = True
-        '
-        'NumericUpDown4
-        '
-        Me.NumericUpDown4.Increment = New Decimal(New Integer() {15, 0, 0, 0})
-        Me.NumericUpDown4.Location = New System.Drawing.Point(483, 534)
-        Me.NumericUpDown4.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.NumericUpDown4.Name = "NumericUpDown4"
-        Me.NumericUpDown4.Size = New System.Drawing.Size(75, 20)
-        Me.NumericUpDown4.TabIndex = 112
+        Me.Label62.AutoSize = True
+        Me.Label62.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label62.Location = New System.Drawing.Point(630, 479)
+        Me.Label62.Name = "Label62"
+        Me.Label62.Size = New System.Drawing.Size(52, 18)
+        Me.Label62.TabIndex = 113
+        Me.Label62.Text = "Rotate"
         '
         'Form1
         '
@@ -2603,13 +2615,13 @@ Partial Class Form1
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage10.ResumeLayout(False)
         Me.TabPage10.PerformLayout()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2834,4 +2846,5 @@ Partial Class Form1
     Friend WithEvents Label57 As Label
     Friend WithEvents Button3 As Button
     Friend WithEvents NumericUpDown4 As NumericUpDown
+    Friend WithEvents Label62 As Label
 End Class

@@ -10,3 +10,15 @@ C:\Repos\Fan_GA\Fan_GA\Fan_GA\obj\Debug\Fan_GA.vbproj.CoreCompileInputs.cache
 C:\Repos\Fan_GA\Fan_GA\Fan_GA\obj\Debug\Fan_GA.exe
 C:\Repos\Fan_GA\Fan_GA\Fan_GA\obj\Debug\Fan_GA.xml
 C:\Repos\Fan_GA\Fan_GA\Fan_GA\obj\Debug\Fan_GA.pdb
+C:\Repositories\Fan_GA\Fan_GA\bin\Debug\Fan_GA.exe.config
+C:\Repositories\Fan_GA\Fan_GA\bin\Debug\Fan_GA.exe
+C:\Repositories\Fan_GA\Fan_GA\bin\Debug\Fan_GA.pdb
+C:\Repositories\Fan_GA\Fan_GA\bin\Debug\Fan_GA.xml
+C:\Repositories\Fan_GA\Fan_GA\obj\Debug\Fan_GA.vbprojAssemblyReference.cache
+C:\Repositories\Fan_GA\Fan_GA\obj\Debug\Fan_GA.Form1.resources
+C:\Repositories\Fan_GA\Fan_GA\obj\Debug\Fan_GA.Resources.resources
+C:\Repositories\Fan_GA\Fan_GA\obj\Debug\Fan_GA.vbproj.GenerateResource.cache
+C:\Repositories\Fan_GA\Fan_GA\obj\Debug\Fan_GA.vbproj.CoreCompileInputs.cache
+C:\Repositories\Fan_GA\Fan_GA\obj\Debug\Fan_GA.exe
+C:\Repositories\Fan_GA\Fan_GA\obj\Debug\Fan_GA.xml
+C:\Repositories\Fan_GA\Fan_GA\obj\Debug\Fan_GA.pdb

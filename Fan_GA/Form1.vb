@@ -585,7 +585,7 @@ Public Class Form1
         Dim r, r1, r2 As Double
         Dim x, y, z As Double
         Dim xx, yy, zz As Double
-        Dim x0, y0 As Integer
+        Dim mid As Point
         Dim inlet_d As Integer
         Dim onshape As Double = 1000 'Dimension in [m]
         '================
@@ -599,8 +599,8 @@ Public Class Form1
         Double.TryParse(TextBox25.Text, r2) 'big radius
         Integer.TryParse(TextBox28.Text, inlet_d) 'big radius
 
-        x0 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
-        y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+        mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
         '======== volute =============
         For i As Integer = 0 To 360
@@ -611,8 +611,8 @@ Public Class Form1
 
             csv = csv & "volute, " & CInt(x / onshape).ToString & ", " & CInt(y / onshape).ToString & ", " & CInt(z / onshape).ToString & vbCrLf
 
-            nx = CInt(x0 + x / pic_scale)
-            ny = CInt(y0 + y / pic_scale)
+            nx = CInt(mid.X + x / pic_scale)
+            ny = CInt(mid.Y + y / pic_scale)
 
             If nx < 0 Then nx = 0
             If ny < 0 Then ny = 0
@@ -656,52 +656,48 @@ Public Class Form1
 
     End Sub
     Private Sub Draw_circle(ByVal pic As Bitmap, ByVal c_radius As Double)
-        Dim x0, y0 As Integer
+        Dim mid, n As Point
         Dim c As Color = Color.White
-        Dim nx, ny As Integer
         Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
-        x0 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
-        y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+        mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
         For i As Integer = 0 To 360 Step 5
-            nx = CInt(x0 + (c_radius * Cos(i / 180 * PI)) / pic_scale)
-            ny = CInt(y0 + (c_radius * Sin(i / 180 * PI)) / pic_scale)
+            n.X = CInt(mid.X + (c_radius * Cos(i / 180 * PI)) / pic_scale)
+            n.Y = CInt(mid.Y + (c_radius * Sin(i / 180 * PI)) / pic_scale)
 
-            If nx < 0 Then nx = 0
-            If ny < 0 Then ny = 0
-            If nx >= PictureBox16.Width Then nx = PictureBox16.Width
-            If ny >= PictureBox16.Height Then ny = PictureBox16.Height
+            If n.X < 0 Then n.X = 0
+            If n.Y < 0 Then n.Y = 0
+            If n.X >= PictureBox16.Width Then n.X = PictureBox16.Width
+            If n.Y >= PictureBox16.Height Then n.Y = PictureBox16.Height
 
-            pic.SetPixel(nx, ny, c)
+            pic.SetPixel(n.X, n.Y, c)
             PictureBox16.Image = pic
         Next
     End Sub
 
     Private Sub Draw_line(ByVal pic As Bitmap, ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer)
-        Dim x00, y00 As Integer
-        Dim x6, y6 As Integer
-        Dim x7, y7 As Integer
-
+        Dim mid, p6, p7 As Point
 
         Dim g As Graphics = Graphics.FromImage(pic)
         Dim myPen As Pen = New Pen(Color.Blue, 3)
         Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
-        x00 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
-        y00 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+        mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
-        x6 = CInt(x00 - (x1 / pic_scale)) 'Start point
-        y6 = CInt(y00 - (y1 / pic_scale)) 'Start point
+        p6.X = CInt(mid.X - (x1 / pic_scale)) 'Start point
+        p6.Y = CInt(mid.Y - (y1 / pic_scale)) 'Start point
 
-        x7 = CInt(x00 - (x2 / pic_scale)) 'End point
-        y7 = CInt(y00 - (y2 / pic_scale)) 'End point
+        p7.X = CInt(mid.X - (x2 / pic_scale)) 'End point
+        p7.Y = CInt(mid.Y - (y2 / pic_scale)) 'End point
 
-        Label53.Text = "mid " & x00.ToString & " " & y00.ToString
-        Label55.Text = "start " & x6.ToString & " " & y6.ToString
-        Label57.Text = "end " & x7.ToString & " " & y7.ToString
+        Label53.Text = "mid " & mid.X.ToString & " " & mid.Y.ToString
+        Label55.Text = "start " & p6.X.ToString & " " & p6.Y.ToString
+        Label57.Text = "end " & p7.X.ToString & " " & p7.Y.ToString
 
-        g.DrawLine(myPen, x6, y6, x7, y7)
+        g.DrawLine(myPen, p6.X, p6.Y, p7.X, p7.Y)
         PictureBox16.Image = pic
     End Sub
 
@@ -744,16 +740,12 @@ Public Class Form1
         delta_x = Abs(mid.X - input.X)
         delta_y = Abs(mid.Y - input.Y)
 
-        'MessageBox.Show(delta_x.ToString & "  " & delta_y.ToString)
-
         vektor_length = Sqrt(delta_x ^ 2 + delta_y ^ 2)
         vektor_angle = Asin(delta_y / vektor_length)
 
-        'MessageBox.Show(vektor_length.ToString & "  " & vektor_angle.ToString)
 
         neww.X = CInt(vektor_length * Cos(vektor_angle - rotatie_hoek / 180 * PI))
         neww.Y = CInt(vektor_length * Sin(vektor_angle - rotatie_hoek / 180 * PI))
-
         Return neww
     End Function
 
@@ -771,6 +763,5 @@ Public Class Form1
         result = Rotate(mid, pp, hhoek)
 
         MessageBox.Show(result.X.ToString & "  " & result.Y.ToString)
-
     End Sub
 End Class
