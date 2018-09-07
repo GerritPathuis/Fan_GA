@@ -690,11 +690,11 @@ Public Class Form1
         x00 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
         y00 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
-        x6 = CInt(x00 + (x1 / pic_scale)) 'Start point
-        y6 = CInt(y00 + (y1 / pic_scale)) 'Start point
+        x6 = CInt(x00 - (x1 / pic_scale)) 'Start point
+        y6 = CInt(y00 - (y1 / pic_scale)) 'Start point
 
-        x7 = CInt(x00 + (x2 / pic_scale)) 'End point
-        y7 = CInt(y00 + (y2 / pic_scale)) 'End point
+        x7 = CInt(x00 - (x2 / pic_scale)) 'End point
+        y7 = CInt(y00 - (y2 / pic_scale)) 'End point
 
         Label53.Text = "mid " & x00.ToString & " " & y00.ToString
         Label55.Text = "start " & x6.ToString & " " & y6.ToString
