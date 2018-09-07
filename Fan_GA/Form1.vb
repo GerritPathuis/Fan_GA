@@ -605,14 +605,14 @@ Public Class Form1
         '======== volute =============
         For i As Integer = 0 To 360
             r = r1 + i / 360 * (r2 - r1)
-            y = r * Sin(i / 180 * PI) / onshape
-            x = r * Cos(i / 180 * PI) / onshape
+            y = r * Sin(i / 180 * PI)
+            x = r * Cos(i / 180 * PI)
             z = 0.000
 
-            csv = csv & "volute, " & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
+            csv = csv & "volute, " & CInt(x / onshape).ToString & ", " & CInt(y / onshape).ToString & ", " & CInt(z / onshape).ToString & vbCrLf
 
-            nx = CInt(x0 + x * pic_scale)
-            ny = CInt(y0 + y * pic_scale)
+            nx = CInt(x0 + x / pic_scale)
+            ny = CInt(y0 + y / pic_scale)
 
             If nx < 0 Then nx = 0
             If ny < 0 Then ny = 0
@@ -628,25 +628,29 @@ Public Class Form1
         Dim p, q, s As Double
         Double.TryParse(TextBox20.Text, p) 'x off set inlet flange
         Double.TryParse(TextBox57.Text, q) 'CL flange= CL shaft vertikal
-        Double.TryParse(TextBox28.Text, s) 'flange height
-        x = p / onshape
-        y = (q + s / 2) / onshape
+        Double.TryParse(TextBox18.Text, s) 'flange height
+
+        '==== start point =====
+        x = p
+        y = (q + s / 2)
         z = 0.000
+        '==== end point =====
         xx = x
-        yy = (q - s / 2) / onshape
+        yy = (q - s / 2)
         zz = 0.000
 
-        csv = csv & "volute, " & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
-        csv = csv & "volute, " & xx.ToString("0.000") & ", " & yy.ToString("0.000") & ", " & zz.ToString("0.000") & vbCrLf
+        csv = csv & "volute, " & CInt(x / onshape).ToString & ", " & CInt(y / onshape).ToString & ", " & CInt(z / 1000).ToString & vbCrLf
+        csv = csv & "volute, " & CInt(xx / onshape).ToString & ", " & CInt(yy / onshape).ToString & ", " & CInt(zz / onshape).ToString & vbCrLf
+
         Draw_line(pic, CInt(x), CInt(y), CInt(xx), CInt(yy))  'Picture outlet flange
 
         '======== inlet flange diameter =============
         For i As Integer = 0 To 360
             r = inlet_d / 2
-            y = r * Sin(i / 180 * PI) / onshape
-            x = r * Cos(i / 180 * PI) / onshape
+            y = r * Sin(i / 180 * PI)
+            x = r * Cos(i / 180 * PI)
             z = 0.000
-            csv = csv & "Inlet, " & x.ToString("0.000") & ", " & y.ToString("0.000") & ", " & z.ToString("0.000") & vbCrLf
+            csv = csv & "Inlet, " & CInt(x / onshape).ToString & ", " & CInt(y / onshape).ToString & ", " & CInt(z / onshape).ToString & vbCrLf
         Next
         Draw_circle(pic, inlet_d / 2)        'Picture Inlet flange
 
@@ -661,8 +665,8 @@ Public Class Form1
         y0 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
         For i As Integer = 0 To 360 Step 5
-            nx = CInt(x0 + (c_radius / 1000 * Cos(i / 180 * PI)) * pic_scale)
-            ny = CInt(y0 + (c_radius / 1000 * Sin(i / 180 * PI)) * pic_scale)
+            nx = CInt(x0 + (c_radius * Cos(i / 180 * PI)) / pic_scale)
+            ny = CInt(y0 + (c_radius * Sin(i / 180 * PI)) / pic_scale)
 
             If nx < 0 Then nx = 0
             If ny < 0 Then ny = 0
@@ -686,14 +690,15 @@ Public Class Form1
         x00 = CInt(PictureBox16.Width / 2)   'Midpoint canvas
         y00 = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
-        x6 = CInt(x00 + (x1 * pic_scale)) 'Start point
-        y6 = CInt(y00 + (y1 * pic_scale)) 'Start point
+        x6 = CInt(x00 + (x1 / pic_scale)) 'Start point
+        y6 = CInt(y00 + (y1 / pic_scale)) 'Start point
 
-        x7 = CInt(x00 + (x2 * pic_scale)) 'End point
-        y7 = CInt(y00 + (y2 * pic_scale)) 'End point
+        x7 = CInt(x00 + (x2 / pic_scale)) 'End point
+        y7 = CInt(y00 + (y2 / pic_scale)) 'End point
 
-        'MessageBox.Show("Start " & x00.ToString & " " & y00.ToString)
-        'MessageBox.Show("end " & x6.ToString & " " & y6.ToString)
+        Label53.Text = "mid " & x00.ToString & " " & y00.ToString
+        Label55.Text = "start " & x6.ToString & " " & y6.ToString
+        Label57.Text = "end " & x7.ToString & " " & y7.ToString
 
         g.DrawLine(myPen, x6, y6, x7, y7)
         PictureBox16.Image = pic
