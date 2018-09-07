@@ -683,6 +683,7 @@ Public Class Form1
         Dim x6, y6 As Integer
         Dim x7, y7 As Integer
 
+
         Dim g As Graphics = Graphics.FromImage(pic)
         Dim myPen As Pen = New Pen(Color.Blue, 3)
         Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
@@ -733,5 +734,43 @@ Public Class Form1
 
     Private Sub TabControl1_Enter(sender As Object, e As EventArgs) Handles TabControl1.Enter
         Calc_volute()
+    End Sub
+    'OPgelet de rotatie_hoek wordt in graden ingevuld
+    Private Function Rotate(ByVal mid As Point, ByVal input As Point, rotatie_hoek As Double) As Point
+        Dim vektor_length, vektor_angle As Double
+        Dim delta_x, delta_y As Double
+        Dim neww As Point
+
+        delta_x = Abs(mid.X - input.X)
+        delta_y = Abs(mid.Y - input.Y)
+
+        'MessageBox.Show(delta_x.ToString & "  " & delta_y.ToString)
+
+        vektor_length = Sqrt(delta_x ^ 2 + delta_y ^ 2)
+        vektor_angle = Asin(delta_y / vektor_length)
+
+        'MessageBox.Show(vektor_length.ToString & "  " & vektor_angle.ToString)
+
+        neww.X = CInt(vektor_length * Cos(vektor_angle - rotatie_hoek / 180 * PI))
+        neww.Y = CInt(vektor_length * Sin(vektor_angle - rotatie_hoek / 180 * PI))
+
+        Return neww
+    End Function
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim mid, pp, result As Point
+        Dim hhoek As Double
+
+        mid.X = 0
+        mid.Y = 0
+
+        pp.X = 0
+        pp.Y = 100
+
+        hhoek = NumericUpDown4.Value
+        result = Rotate(mid, pp, hhoek)
+
+        MessageBox.Show(result.X.ToString & "  " & result.Y.ToString)
+
     End Sub
 End Class

@@ -241,6 +241,8 @@ Partial Class Form1
         Me.Label109 = New System.Windows.Forms.Label()
         Me.Label108 = New System.Windows.Forms.Label()
         Me.TextBox49 = New System.Windows.Forms.TextBox()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -280,6 +282,7 @@ Partial Class Form1
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -2170,6 +2173,8 @@ Partial Class Form1
         '
         'TabPage10
         '
+        Me.TabPage10.Controls.Add(Me.NumericUpDown4)
+        Me.TabPage10.Controls.Add(Me.Button3)
         Me.TabPage10.Controls.Add(Me.Label57)
         Me.TabPage10.Controls.Add(Me.Label55)
         Me.TabPage10.Controls.Add(Me.Label53)
@@ -2525,6 +2530,24 @@ Partial Class Form1
         Me.TextBox49.TabIndex = 83
         Me.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(647, 566)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.TabIndex = 111
+        Me.Button3.Text = "Button3"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'NumericUpDown4
+        '
+        Me.NumericUpDown4.Increment = New Decimal(New Integer() {15, 0, 0, 0})
+        Me.NumericUpDown4.Location = New System.Drawing.Point(483, 534)
+        Me.NumericUpDown4.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
+        Me.NumericUpDown4.Name = "NumericUpDown4"
+        Me.NumericUpDown4.Size = New System.Drawing.Size(75, 20)
+        Me.NumericUpDown4.TabIndex = 112
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2586,6 +2609,7 @@ Partial Class Form1
         Me.GroupBox4.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2808,4 +2832,6 @@ Partial Class Form1
     Friend WithEvents Label55 As Label
     Friend WithEvents Label53 As Label
     Friend WithEvents Label57 As Label
+    Friend WithEvents Button3 As Button
+    Friend WithEvents NumericUpDown4 As NumericUpDown
 End Class
