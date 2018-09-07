@@ -692,8 +692,8 @@ Public Class Form1
         x7 = CInt(x00 + (x2 * pic_scale)) 'End point
         y7 = CInt(y00 + (y2 * pic_scale)) 'End point
 
-        MessageBox.Show("Start " & x00.ToString & " " & y00.ToString)
-        MessageBox.Show("end " & x6.ToString & " " & y6.ToString)
+        'MessageBox.Show("Start " & x00.ToString & " " & y00.ToString)
+        'MessageBox.Show("end " & x6.ToString & " " & y6.ToString)
 
         g.DrawLine(myPen, x6, y6, x7, y7)
         PictureBox16.Image = pic
