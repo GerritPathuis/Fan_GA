@@ -724,6 +724,7 @@ Public Class Form1
         If vol = 0 Then vol = CDbl(TextBox22.Text)
 
         TextBox27.Text = vol.ToString("0")    'Volute small
+        Calc_volute()
     End Sub
 
     Private Sub NumericUpDown3_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown3.ValueChanged
