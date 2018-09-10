@@ -363,6 +363,7 @@ Public Class Form1
     "K-630;630;500;100;200;225;78;52;5;2100;19"
     }
 
+    Public Shared _mid As Point
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim ListView1 As ListView
@@ -435,6 +436,9 @@ Public Class Form1
             ComboBox6.Items.Add(words(0)) 'Fill combobox 
         Next hh
         ComboBox6.SelectedIndex = 2
+
+        _Mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        _Mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
     End Sub
 
@@ -564,7 +568,7 @@ Public Class Form1
     'Save file dialog
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim filename As String = "c:\Temp\Onshape.csv"
-        Calc_volute()
+        Calc_casing()
 
         If File.Exists(filename) Then
             File.Delete(filename)
@@ -578,20 +582,20 @@ Public Class Form1
         End Try
         'MessageBox.Show(filename & " is succesfully written")
     End Sub
-    Private Sub Calc_volute()
+    Private Sub Calc_casing()
         'https://nl.wikipedia.org/wiki/Archimedes-spiraal
         'r =r1 + t*(r2-r1)	
         'the onshape unit is meter !!
         Dim r, r1, r2 As Double
-        Dim x, y, z As Double
-        Dim xx, yy, zz As Double
-        Dim mid As Point
+        Dim delta_x, delta_y, z As Double
+        Dim a, b, c As Point
+        Dim hook As Double
+        Dim n As Point
         Dim inlet_d As Integer
         Dim onshape As Double = 1000 'Dimension in [m]
         '================
         Dim pic As Bitmap = New System.Drawing.Bitmap(1000, 1000)
-        Dim nx, ny As Integer
-        Dim c As Color = Color.White
+        Dim kleur As Color = Color.White
         Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
         csv = String.Empty
@@ -599,103 +603,91 @@ Public Class Form1
         Double.TryParse(TextBox25.Text, r2) 'big radius
         Integer.TryParse(TextBox28.Text, inlet_d) 'big radius
 
-        mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
-        mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+        hook = NumericUpDown4.Value            'Rotation
 
-        '======== volute =============
-        For i As Integer = 0 To 360
-            r = r1 + i / 360 * (r2 - r1)
-            y = r * Sin(i / 180 * PI)
-            x = r * Cos(i / 180 * PI)
-            z = 0.000
+        If r1 > 0 Then  'For fast program startup
+            '======== volute =============
+            For i As Integer = 0 To 360 Step 10
+                r = r1 + i / 360 * (r2 - r1)
+                delta_y = r * Sin(i / 180 * PI)
+                delta_x = r * Cos(i / 180 * PI)
 
-            csv = csv & "volute, " & CInt(x / onshape).ToString & ", " & CInt(y / onshape).ToString & ", " & CInt(z / onshape).ToString & vbCrLf
+                '====== onshape export ========
+                csv = csv & "volute, " & CInt(delta_x / onshape).ToString & ", " & CInt(delta_y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
 
-            nx = CInt(mid.X + x / pic_scale)
-            ny = CInt(mid.Y + y / pic_scale)
+                '====== Picture box ========
+                n.X = CInt(_mid.X + delta_x / pic_scale)
+                n.Y = CInt(_mid.Y + delta_y / pic_scale)
 
-            If nx < 0 Then nx = 0
-            If ny < 0 Then ny = 0
+                '  MessageBox.Show(n.X.ToString & "vv" & n.Y.ToString)
 
-            If nx >= PictureBox16.Width Then nx = PictureBox16.Width
-            If ny >= PictureBox16.Height Then ny = PictureBox16.Height
+                n = Rotate(n, hook)
+                pic.SetPixel(n.X, n.Y, kleur)
+                PictureBox16.Image = pic
+            Next
 
-            pic.SetPixel(nx, ny, c)
-            PictureBox16.Image = pic
-        Next
+            '======== Outlet rectangle flange =============
+            Dim p, q, s As Double
+            Double.TryParse(TextBox20.Text, p) 'x off set inlet flange
+            Double.TryParse(TextBox57.Text, q) 'CL flange= CL shaft vertikal
+            Double.TryParse(TextBox18.Text, s) 'flange height
 
-        '======== Outlet rectangle flange =============
-        Dim p, q, s As Double
-        Double.TryParse(TextBox20.Text, p) 'x off set inlet flange
-        Double.TryParse(TextBox57.Text, q) 'CL flange= CL shaft vertikal
-        Double.TryParse(TextBox18.Text, s) 'flange height
+            '==== start point flange =====
+            a.X = CInt(p)
+            a.Y = CInt(q + s / 2)
+            a = Rotate(a, hook)
 
-        '==== start point =====
-        x = p
-        y = (q + s / 2)
-        z = 0.000
-        '==== end point =====
-        xx = x
-        yy = (q - s / 2)
-        zz = 0.000
+            '==== end point flange =====
+            b.X = CInt(p)
+            b.Y = CInt(q - s / 2)
+            b = Rotate(b, hook)
 
-        csv = csv & "volute, " & CInt(x / onshape).ToString & ", " & CInt(y / onshape).ToString & ", " & CInt(z / 1000).ToString & vbCrLf
-        csv = csv & "volute, " & CInt(xx / onshape).ToString & ", " & CInt(yy / onshape).ToString & ", " & CInt(zz / onshape).ToString & vbCrLf
+            csv = csv & "volute, " & CInt(a.X / onshape).ToString & ", " & CInt(a.Y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
+            csv = csv & "volute, " & CInt(b.X / onshape).ToString & ", " & CInt(b.Y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
 
-        Draw_line(pic, CInt(x), CInt(y), CInt(xx), CInt(yy))  'Picture outlet flange
+            Draw_line(pic, CInt(a.X), CInt(a.Y), CInt(b.X), CInt(b.Y))  'Picture outlet flange
 
-        '======== inlet flange diameter =============
-        For i As Integer = 0 To 360
-            r = inlet_d / 2
-            y = r * Sin(i / 180 * PI)
-            x = r * Cos(i / 180 * PI)
-            z = 0.000
-            csv = csv & "Inlet, " & CInt(x / onshape).ToString & ", " & CInt(y / onshape).ToString & ", " & CInt(z / onshape).ToString & vbCrLf
-        Next
-        Draw_circle(pic, inlet_d / 2)        'Picture Inlet flange
-
+            '======== inlet flange diameter =============
+            For i As Integer = 0 To 360
+                r = inlet_d / 2
+                c.Y = CInt(r * Sin(i / 180 * PI))
+                c.X = CInt(r * Cos(i / 180 * PI))
+                z = 0.000
+                csv = csv & "Inlet, " & CInt(c.X / onshape).ToString & ", " & CInt(c.Y / onshape).ToString & ", " & CInt(z / onshape).ToString & vbCrLf
+            Next
+            Draw_circle(pic, inlet_d / 2)        'Picture Inlet flange
+        End If
     End Sub
     Private Sub Draw_circle(ByVal pic As Bitmap, ByVal c_radius As Double)
-        Dim mid, n As Point
+        Dim n As Point
         Dim c As Color = Color.White
         Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
-        mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
-        mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
-
         For i As Integer = 0 To 360 Step 5
-            n.X = CInt(mid.X + (c_radius * Cos(i / 180 * PI)) / pic_scale)
-            n.Y = CInt(mid.Y + (c_radius * Sin(i / 180 * PI)) / pic_scale)
+            n.X = CInt(_mid.X + (c_radius * Cos(i / 180 * PI)) / pic_scale)
+            n.Y = CInt(_mid.Y + (c_radius * Sin(i / 180 * PI)) / pic_scale)
 
-            If n.X < 0 Then n.X = 0
-            If n.Y < 0 Then n.Y = 0
-            If n.X >= PictureBox16.Width Then n.X = PictureBox16.Width
-            If n.Y >= PictureBox16.Height Then n.Y = PictureBox16.Height
-
+            n = Check_inside_pic(n)
             pic.SetPixel(n.X, n.Y, c)
             PictureBox16.Image = pic
         Next
     End Sub
 
     Private Sub Draw_line(ByVal pic As Bitmap, ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer)
-        Dim mid, p6, p7 As Point
+        Dim p6, p7 As Point
 
         Dim g As Graphics = Graphics.FromImage(pic)
         Dim myPen As Pen = New Pen(Color.Blue, 3)
         Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
-        mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
-        mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+        p6.X = CInt(_mid.X - (x1 / pic_scale)) 'Start point
+        p6.Y = CInt(_mid.Y - (y1 / pic_scale)) 'Start point
 
-        p6.X = CInt(mid.X - (x1 / pic_scale)) 'Start point
-        p6.Y = CInt(mid.Y - (y1 / pic_scale)) 'Start point
+        p7.X = CInt(_mid.X - (x2 / pic_scale)) 'End point
+        p7.Y = CInt(_mid.Y - (y2 / pic_scale)) 'End point
 
-        p7.X = CInt(mid.X - (x2 / pic_scale)) 'End point
-        p7.Y = CInt(mid.Y - (y2 / pic_scale)) 'End point
-
-        Label53.Text = "mid " & mid.X.ToString & " " & mid.Y.ToString
-        Label55.Text = "start " & p6.X.ToString & " " & p6.Y.ToString
-        Label57.Text = "end " & p7.X.ToString & " " & p7.Y.ToString
+        p6 = Check_inside_pic(p6)
+        p7 = Check_inside_pic(p7)
 
         g.DrawLine(myPen, p6.X, p6.Y, p7.X, p7.Y)
         PictureBox16.Image = pic
@@ -721,47 +713,51 @@ Public Class Form1
         If vol = 0 Then vol = CDbl(TextBox22.Text)
 
         TextBox27.Text = vol.ToString("0")    'Volute small
-        Calc_volute()
+        Calc_casing()
     End Sub
 
     Private Sub NumericUpDown3_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown3.ValueChanged
-        Calc_volute()
+        Calc_casing()
     End Sub
 
     Private Sub TabControl1_Enter(sender As Object, e As EventArgs) Handles TabControl1.Enter
-        Calc_volute()
+        Calc_casing()
     End Sub
-    'OPgelet de rotatie_hoek wordt in graden ingevuld
-    Private Function Rotate(ByVal mid As Point, ByVal input As Point, rotatie_hoek As Double) As Point
+    'Opgelet de rotatie_hoek wordt in graden ingevuld
+    Private Function Rotate(ByVal input As Point, rotatie_hoek As Double) As Point
         Dim vektor_length, vektor_angle As Double
         Dim delta_x, delta_y As Double
         Dim neww As Point
 
-        delta_x = Abs(mid.X - input.X)
-        delta_y = Abs(mid.Y - input.Y)
+        delta_x = input.X - _mid.X
+        delta_y = input.Y - _mid.Y
 
         vektor_length = Sqrt(delta_x ^ 2 + delta_y ^ 2)
-        vektor_angle = Asin(delta_y / vektor_length)
+        vektor_angle = Atan(delta_y / delta_x) * 180 / PI
 
+        MessageBox.Show(vektor_length.ToString("0.0") & "vv" & vektor_angle.ToString("0.00"))
 
-        neww.X = CInt(vektor_length * Cos(vektor_angle - rotatie_hoek / 180 * PI))
-        neww.Y = CInt(vektor_length * Sin(vektor_angle - rotatie_hoek / 180 * PI))
+        neww.X = CInt(vektor_length * Cos(vektor_angle - (rotatie_hoek / 180 * PI)))
+        neww.Y = CInt(vektor_length * Sin(vektor_angle - (rotatie_hoek / 180 * PI)))
+
+        '======= make sure result with in the picture frame =====
+        neww = Check_inside_pic(neww)
         Return neww
     End Function
+    Private Function Check_inside_pic(ByVal p As Point) As Point
+        If p.X < 0 Then p.X = 0
+        If p.Y < 0 Then p.Y = 0
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Dim mid, pp, result As Point
-        Dim hhoek As Double
+        If p.X >= PictureBox16.Width Then p.X = PictureBox16.Width
+        If p.Y >= PictureBox16.Height Then p.Y = PictureBox16.Height
 
-        mid.X = 0
-        mid.Y = 0
+        Label53.Text = "Point " & p.X.ToString & " " & p.Y.ToString
+        'Label55.Text = "start " & p6.X.ToString & " " & p6.Y.ToString
+        'Label57.Text = "end " & p7.X.ToString & " " & p7.Y.ToString
+        Return (p)
+    End Function
 
-        pp.X = 0
-        pp.Y = 100
-
-        hhoek = NumericUpDown4.Value
-        result = Rotate(mid, pp, hhoek)
-
-        MessageBox.Show(result.X.ToString & "  " & result.Y.ToString)
+    Private Sub NumericUpDown4_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown4.ValueChanged
+        Calc_casing()
     End Sub
 End Class

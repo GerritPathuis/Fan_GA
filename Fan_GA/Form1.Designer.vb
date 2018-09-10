@@ -208,8 +208,8 @@ Partial Class Form1
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.Label62 = New System.Windows.Forms.Label()
         Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
-        Me.Button3 = New System.Windows.Forms.Button()
         Me.Label57 = New System.Windows.Forms.Label()
         Me.Label55 = New System.Windows.Forms.Label()
         Me.Label53 = New System.Windows.Forms.Label()
@@ -243,7 +243,6 @@ Partial Class Form1
         Me.Label109 = New System.Windows.Forms.Label()
         Me.Label108 = New System.Windows.Forms.Label()
         Me.TextBox49 = New System.Windows.Forms.TextBox()
-        Me.Label62 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -2176,7 +2175,6 @@ Partial Class Form1
         '
         Me.TabPage10.Controls.Add(Me.Label62)
         Me.TabPage10.Controls.Add(Me.NumericUpDown4)
-        Me.TabPage10.Controls.Add(Me.Button3)
         Me.TabPage10.Controls.Add(Me.Label57)
         Me.TabPage10.Controls.Add(Me.Label55)
         Me.TabPage10.Controls.Add(Me.Label53)
@@ -2194,23 +2192,24 @@ Partial Class Form1
         Me.TabPage10.Text = "ONSHAPE"
         Me.TabPage10.UseVisualStyleBackColor = True
         '
+        'Label62
+        '
+        Me.Label62.AutoSize = True
+        Me.Label62.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label62.Location = New System.Drawing.Point(630, 479)
+        Me.Label62.Name = "Label62"
+        Me.Label62.Size = New System.Drawing.Size(52, 18)
+        Me.Label62.TabIndex = 113
+        Me.Label62.Text = "Rotate"
+        '
         'NumericUpDown4
         '
-        Me.NumericUpDown4.Increment = New Decimal(New Integer() {15, 0, 0, 0})
+        Me.NumericUpDown4.Increment = New Decimal(New Integer() {5, 0, 0, 0})
         Me.NumericUpDown4.Location = New System.Drawing.Point(697, 477)
         Me.NumericUpDown4.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
         Me.NumericUpDown4.Name = "NumericUpDown4"
         Me.NumericUpDown4.Size = New System.Drawing.Size(75, 20)
         Me.NumericUpDown4.TabIndex = 112
-        '
-        'Button3
-        '
-        Me.Button3.Location = New System.Drawing.Point(647, 566)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(75, 23)
-        Me.Button3.TabIndex = 111
-        Me.Button3.Text = "Button3"
-        Me.Button3.UseVisualStyleBackColor = True
         '
         'Label57
         '
@@ -2550,16 +2549,6 @@ Partial Class Form1
         Me.TextBox49.TabIndex = 83
         Me.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Label62
-        '
-        Me.Label62.AutoSize = True
-        Me.Label62.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label62.Location = New System.Drawing.Point(630, 479)
-        Me.Label62.Name = "Label62"
-        Me.Label62.Size = New System.Drawing.Size(52, 18)
-        Me.Label62.TabIndex = 113
-        Me.Label62.Text = "Rotate"
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2844,7 +2833,6 @@ Partial Class Form1
     Friend WithEvents Label55 As Label
     Friend WithEvents Label53 As Label
     Friend WithEvents Label57 As Label
-    Friend WithEvents Button3 As Button
     Friend WithEvents NumericUpDown4 As NumericUpDown
     Friend WithEvents Label62 As Label
 End Class
