@@ -2263,9 +2263,9 @@ Partial Class Form1
         'PictureBox16
         '
         Me.PictureBox16.BackColor = System.Drawing.Color.Black
-        Me.PictureBox16.Location = New System.Drawing.Point(339, 32)
+        Me.PictureBox16.Location = New System.Drawing.Point(423, 32)
         Me.PictureBox16.Name = "PictureBox16"
-        Me.PictureBox16.Size = New System.Drawing.Size(505, 427)
+        Me.PictureBox16.Size = New System.Drawing.Size(400, 402)
         Me.PictureBox16.TabIndex = 92
         Me.PictureBox16.TabStop = False
         '
@@ -2279,7 +2279,7 @@ Partial Class Form1
         Me.GroupBox4.Controls.Add(Me.Label56)
         Me.GroupBox4.Location = New System.Drawing.Point(19, 286)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(314, 126)
+        Me.GroupBox4.Size = New System.Drawing.Size(369, 126)
         Me.GroupBox4.TabIndex = 91
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Volute"
@@ -2372,7 +2372,7 @@ Partial Class Form1
         Me.GroupBox1.Controls.Add(Me.TextBox49)
         Me.GroupBox1.Location = New System.Drawing.Point(19, 32)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(314, 238)
+        Me.GroupBox1.Size = New System.Drawing.Size(369, 238)
         Me.GroupBox1.TabIndex = 89
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Selected Components"

@@ -437,9 +437,9 @@ Public Class Form1
         Next hh
         ComboBox6.SelectedIndex = 2
 
-        _Mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
+        PictureBox16.Size = CType(New Point(400, 400), Size)
+        _mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
         _Mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
-
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -594,7 +594,7 @@ Public Class Form1
         Dim inlet_d As Integer
         Dim onshape As Double = 1000 'Dimension in [m]
         '================
-        Dim pic As Bitmap = New System.Drawing.Bitmap(1000, 1000)
+        Dim pic As Bitmap = New Bitmap(1000, 1000)
         Dim kleur As Color = Color.White
         Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
@@ -622,6 +622,7 @@ Public Class Form1
                 '  MessageBox.Show(n.X.ToString & "vv" & n.Y.ToString)
 
                 n = Rotate(n, hook)
+                n = Move_to_center(n)
                 pic.SetPixel(n.X, n.Y, kleur)
                 PictureBox16.Image = pic
             Next
@@ -635,17 +636,25 @@ Public Class Form1
             '==== start point flange =====
             a.X = CInt(p)
             a.Y = CInt(q + s / 2)
+
+            'MessageBox.Show("voor " & a.X.ToString & ", " & a.Y.ToString)
+
             a = Rotate(a, hook)
+            a = Move_to_center(a)
+            'MessageBox.Show("na   " & a.X.ToString & ", " & a.Y.ToString)
 
             '==== end point flange =====
             b.X = CInt(p)
             b.Y = CInt(q - s / 2)
             b = Rotate(b, hook)
+            b = Move_to_center(b)
 
             csv = csv & "volute, " & CInt(a.X / onshape).ToString & ", " & CInt(a.Y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
             csv = csv & "volute, " & CInt(b.X / onshape).ToString & ", " & CInt(b.Y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
 
             Draw_line(pic, CInt(a.X), CInt(a.Y), CInt(b.X), CInt(b.Y))  'Picture outlet flange
+            Label57.Text = "x=" & a.X.ToString & "," & a.Y.ToString & " y=" & b.X.ToString & "," & b.Y.ToString
+            'Label57.Text = "p=" & p.ToString & " q=" & q.ToString & " s=" & s.ToString
 
             '======== inlet flange diameter =============
             For i As Integer = 0 To 360
@@ -726,24 +735,55 @@ Public Class Form1
     'Opgelet de rotatie_hoek wordt in graden ingevuld
     Private Function Rotate(ByVal input As Point, rotatie_hoek As Double) As Point
         Dim vektor_length, vektor_angle As Double
-        Dim delta_x, delta_y As Double
         Dim neww As Point
+        Dim q As String = "-"
 
-        delta_x = input.X - _mid.X
-        delta_y = input.Y - _mid.Y
+        MessageBox.Show("voor " & input.X.ToString & ", " & input.Y.ToString & ", hoek" & rotatie_hoek.ToString)
 
-        vektor_length = Sqrt(delta_x ^ 2 + delta_y ^ 2)
-        vektor_angle = Atan(delta_y / delta_x) * 180 / PI
+        vektor_length = Sqrt(input.X ^ 2 + input.Y ^ 2)
+        vektor_angle = Atan(input.Y / input.X) * 180 / PI
 
-        MessageBox.Show(vektor_length.ToString("0.0") & "vv" & vektor_angle.ToString("0.00"))
+        If input.X > 0 And input.Y > 0 Then
+            q = ("1 kw")
+            vektor_angle += 0
+        End If
+        If input.X > 0 And input.Y < 0 Then
+            vektor_angle += 90
+            q = ("2 kw")
+        End If
+        If input.X < 0 And input.Y < 0 Then
+            vektor_angle += 180
+            q = ("3 kw")
+        End If
+        If input.X < 0 And input.Y > 0 Then
+            vektor_angle += 270
+            q = ("4 kw")
+        End If
+
+        ' MessageBox.Show(vektor_length.ToString("0.0") & "vv" & vektor_angle.ToString("0.00"))
 
         neww.X = CInt(vektor_length * Cos(vektor_angle - (rotatie_hoek / 180 * PI)))
         neww.Y = CInt(vektor_length * Sin(vektor_angle - (rotatie_hoek / 180 * PI)))
 
         '======= make sure result with in the picture frame =====
         neww = Check_inside_pic(neww)
+
+        MessageBox.Show("Na " & neww.X.ToString & ", " & neww.Y.ToString & ", q= " & q)
+
         Return neww
     End Function
+    Private Function Move_to_center(ByVal f As Point) As Point
+        Dim w As Point
+
+        'Move to center picture
+        w.X = _mid.X - f.X
+        w.Y = _mid.Y - f.Y
+
+        'Still inside picture ?
+        w = Check_inside_pic(w)
+        Return w
+    End Function
+
     Private Function Check_inside_pic(ByVal p As Point) As Point
         If p.X < 0 Then p.X = 0
         If p.Y < 0 Then p.Y = 0
