@@ -734,11 +734,11 @@ Public Class Form1
     End Sub
     'Opgelet de rotatie_hoek wordt in graden ingevuld
     Private Function Rotate(ByVal input As Point, rotatie_hoek As Double) As Point
-        Dim vektor_length, vektor_angle As Double
+        Dim vektor_length, vektor_angle, new_angle As Double
         Dim neww As Point
         Dim q As String = "-"
 
-        MessageBox.Show("voor " & input.X.ToString & ", " & input.Y.ToString & ", hoek" & rotatie_hoek.ToString)
+
 
         vektor_length = Sqrt(input.X ^ 2 + input.Y ^ 2)
         vektor_angle = Atan(input.Y / input.X) * 180 / PI
@@ -762,14 +762,22 @@ Public Class Form1
 
         ' MessageBox.Show(vektor_length.ToString("0.0") & "vv" & vektor_angle.ToString("0.00"))
 
-        neww.X = CInt(vektor_length * Cos(vektor_angle - (rotatie_hoek / 180 * PI)))
-        neww.Y = CInt(vektor_length * Sin(vektor_angle - (rotatie_hoek / 180 * PI)))
+        new_angle = rotatie_hoek + vektor_angle
+
+        neww.X = CInt(vektor_length * Cos(new_angle / 180 * PI))
+        neww.Y = CInt(vektor_length * Sin(new_angle / 180 * PI))
 
         '======= make sure result with in the picture frame =====
         neww = Check_inside_pic(neww)
 
-        MessageBox.Show("Na " & neww.X.ToString & ", " & neww.Y.ToString & ", q= " & q)
+        Dim s As String
+        s = "Input vektor= " & input.X.ToString & ", " & input.Y.ToString & vbCrLf
+        s &= "vektor length= " & vektor_length.ToString & " vektor angle= " & vektor_angle.ToString & vbCrLf
+        s &= "rotatiehoek= " & rotatie_hoek.ToString & vbCrLf
+        s &= "result vektor= " & neww.X.ToString & ", " & neww.Y.ToString & vbCrLf
+        s &= "berekende hoek= " & vektor_angle.ToString & ", newhook= " & new_angle.ToString
 
+        MessageBox.Show(s)
         Return neww
     End Function
     Private Function Move_to_center(ByVal f As Point) As Point
