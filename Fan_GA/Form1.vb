@@ -364,6 +364,7 @@ Public Class Form1
     }
 
     Public Shared _mid As Point
+    Public Shared pic_scale As Integer
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim ListView1 As ListView
@@ -439,7 +440,9 @@ Public Class Form1
 
         PictureBox16.Size = CType(New Point(400, 400), Size)
         _mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
-        _Mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+        _mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
+
+        pic_scale = CInt(NumericUpDown3.Value)
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -596,7 +599,7 @@ Public Class Form1
         '================
         Dim pic As Bitmap = New Bitmap(1000, 1000)
         Dim kleur As Color = Color.Yellow
-        Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
+
 
         csv = String.Empty
         Double.TryParse(TextBox27.Text, r1) 'smal radius
@@ -670,7 +673,6 @@ Public Class Form1
     Private Sub Draw_circle(ByVal pic As Bitmap, ByVal c_radius As Double)
         Dim n As Point
         Dim c As Color = Color.White
-        Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
         For i As Integer = 0 To 360 Step 5
             n.X = CInt(_mid.X + (c_radius * Cos(i / 180 * PI)) / pic_scale)
@@ -687,7 +689,6 @@ Public Class Form1
 
         Dim g As Graphics = Graphics.FromImage(pic)
         Dim myPen As Pen = New Pen(Color.Blue, 3)
-        Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
         p6.X = CInt(_mid.X - (x1 / pic_scale)) 'Start point
         p6.Y = CInt(_mid.Y - (y1 / pic_scale)) 'Start point
@@ -741,11 +742,11 @@ Public Class Form1
         vektor_length = Sqrt(input.X ^ 2 + input.Y ^ 2)
         vektor_angle = Atan(input.Y / input.X) * 180 / PI
 
-        If input.X > 0 And input.Y > 0 Then
+        If input.X >= 0 And input.Y > 0 Then
             q = ("1 kw")
             vektor_angle += 0
         End If
-        If input.X > 0 And input.Y < 0 Then
+        If input.X >= 0 And input.Y < 0 Then
             vektor_angle += 90
             q = ("2 kw")
         End If
@@ -757,8 +758,6 @@ Public Class Form1
             vektor_angle += 270
             q = ("4 kw")
         End If
-
-        ' MessageBox.Show(vektor_length.ToString("0.0") & "vv" & vektor_angle.ToString("0.00"))
 
         new_angle = rotatie_hoek + vektor_angle
 
