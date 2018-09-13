@@ -243,6 +243,7 @@ Partial Class Form1
         Me.Label109 = New System.Windows.Forms.Label()
         Me.Label108 = New System.Windows.Forms.Label()
         Me.TextBox49 = New System.Windows.Forms.TextBox()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -2173,6 +2174,7 @@ Partial Class Form1
         '
         'TabPage10
         '
+        Me.TabPage10.Controls.Add(Me.CheckBox3)
         Me.TabPage10.Controls.Add(Me.Label62)
         Me.TabPage10.Controls.Add(Me.NumericUpDown4)
         Me.TabPage10.Controls.Add(Me.Label57)
@@ -2549,6 +2551,16 @@ Partial Class Form1
         Me.TextBox49.TabIndex = 83
         Me.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
+        'CheckBox3
+        '
+        Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.Location = New System.Drawing.Point(423, 452)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(92, 17)
+        Me.CheckBox3.TabIndex = 114
+        Me.CheckBox3.Text = "Present rotate"
+        Me.CheckBox3.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2835,4 +2847,5 @@ Partial Class Form1
     Friend WithEvents Label57 As Label
     Friend WithEvents NumericUpDown4 As NumericUpDown
     Friend WithEvents Label62 As Label
+    Friend WithEvents CheckBox3 As CheckBox
 End Class

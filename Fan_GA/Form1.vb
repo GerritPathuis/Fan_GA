@@ -595,7 +595,7 @@ Public Class Form1
         Dim onshape As Double = 1000 'Dimension in [m]
         '================
         Dim pic As Bitmap = New Bitmap(1000, 1000)
-        Dim kleur As Color = Color.White
+        Dim kleur As Color = Color.Yellow
         Dim pic_scale As Integer = CInt(NumericUpDown3.Value)
 
         csv = String.Empty
@@ -607,7 +607,8 @@ Public Class Form1
 
         If r1 > 0 Then  'For fast program startup
             '======== volute =============
-            For i As Integer = 0 To 360 Step 10
+
+            For i As Integer = 0 To 360 Step 5
                 r = r1 + i / 360 * (r2 - r1)
                 delta_y = r * Sin(i / 180 * PI)
                 delta_x = r * Cos(i / 180 * PI)
@@ -616,13 +617,12 @@ Public Class Form1
                 csv = csv & "volute, " & CInt(delta_x / onshape).ToString & ", " & CInt(delta_y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
 
                 '====== Picture box ========
-                n.X = CInt(_mid.X + delta_x / pic_scale)
-                n.Y = CInt(_mid.Y + delta_y / pic_scale)
-
-                '  MessageBox.Show(n.X.ToString & "vv" & n.Y.ToString)
+                n.X = CInt(delta_x / pic_scale)
+                n.Y = CInt(delta_y / pic_scale)
 
                 n = Rotate(n, hook)
                 n = Move_to_center(n)
+                n = Check_inside_pic(n)
                 pic.SetPixel(n.X, n.Y, kleur)
                 PictureBox16.Image = pic
             Next
@@ -738,8 +738,6 @@ Public Class Form1
         Dim neww As Point
         Dim q As String = "-"
 
-
-
         vektor_length = Sqrt(input.X ^ 2 + input.Y ^ 2)
         vektor_angle = Atan(input.Y / input.X) * 180 / PI
 
@@ -767,17 +765,15 @@ Public Class Form1
         neww.X = CInt(vektor_length * Cos(new_angle / 180 * PI))
         neww.Y = CInt(vektor_length * Sin(new_angle / 180 * PI))
 
-        '======= make sure result with in the picture frame =====
-        neww = Check_inside_pic(neww)
-
         Dim s As String
         s = "Input vektor= " & input.X.ToString & ", " & input.Y.ToString & vbCrLf
-        s &= "vektor length= " & vektor_length.ToString & " vektor angle= " & vektor_angle.ToString & vbCrLf
-        s &= "rotatiehoek= " & rotatie_hoek.ToString & vbCrLf
+        s &= "vektor length= " & vektor_length.ToString("0") & " vektor angle= " & vektor_angle.ToString("0") & vbCrLf
+        s &= "rotatiehoek= " & rotatie_hoek.ToString("0") & vbCrLf
         s &= "result vektor= " & neww.X.ToString & ", " & neww.Y.ToString & vbCrLf
-        s &= "berekende hoek= " & vektor_angle.ToString & ", newhook= " & new_angle.ToString
+        s &= "berekende hoek= " & vektor_angle.ToString("0") & ", newhook= " & new_angle.ToString("0") & vbCrLf
+        s &= "kwadrant= " & q
 
-        MessageBox.Show(s)
+        If CheckBox3.Checked Then MessageBox.Show(s)
         Return neww
     End Function
     Private Function Move_to_center(ByVal f As Point) As Point
@@ -793,15 +789,27 @@ Public Class Form1
     End Function
 
     Private Function Check_inside_pic(ByVal p As Point) As Point
-        If p.X < 0 Then p.X = 0
-        If p.Y < 0 Then p.Y = 0
+        Dim a As String = "OK"
 
-        If p.X >= PictureBox16.Width Then p.X = PictureBox16.Width
-        If p.Y >= PictureBox16.Height Then p.Y = PictureBox16.Height
+        If p.X < 0 Then
+            p.X = 0
+            a = "x= negative"
+        End If
+        If p.Y < 0 Then
+            p.Y = 0
+            a = "y= negative"
+        End If
 
-        Label53.Text = "Point " & p.X.ToString & " " & p.Y.ToString
-        'Label55.Text = "start " & p6.X.ToString & " " & p6.Y.ToString
-        'Label57.Text = "end " & p7.X.ToString & " " & p7.Y.ToString
+        If p.X >= PictureBox16.Width Then
+            p.X = PictureBox16.Width
+            a = "too wide"
+        End If
+        If p.Y >= PictureBox16.Height Then
+            p.Y = PictureBox16.Height
+            a = "too high"
+        End If
+
+        Label57.Text = a
         Return (p)
     End Function
 
