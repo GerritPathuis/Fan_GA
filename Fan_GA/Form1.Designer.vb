@@ -208,6 +208,7 @@ Partial Class Form1
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.Label62 = New System.Windows.Forms.Label()
         Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
         Me.Label57 = New System.Windows.Forms.Label()
@@ -243,7 +244,8 @@ Partial Class Form1
         Me.Label109 = New System.Windows.Forms.Label()
         Me.Label108 = New System.Windows.Forms.Label()
         Me.TextBox49 = New System.Windows.Forms.TextBox()
-        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.NumericUpDown5 = New System.Windows.Forms.NumericUpDown()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -284,6 +286,7 @@ Partial Class Form1
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -2174,6 +2177,8 @@ Partial Class Form1
         '
         'TabPage10
         '
+        Me.TabPage10.Controls.Add(Me.NumericUpDown5)
+        Me.TabPage10.Controls.Add(Me.Button3)
         Me.TabPage10.Controls.Add(Me.CheckBox3)
         Me.TabPage10.Controls.Add(Me.Label62)
         Me.TabPage10.Controls.Add(Me.NumericUpDown4)
@@ -2193,6 +2198,16 @@ Partial Class Form1
         Me.TabPage10.TabIndex = 9
         Me.TabPage10.Text = "ONSHAPE"
         Me.TabPage10.UseVisualStyleBackColor = True
+        '
+        'CheckBox3
+        '
+        Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.Location = New System.Drawing.Point(423, 452)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(92, 17)
+        Me.CheckBox3.TabIndex = 114
+        Me.CheckBox3.Text = "Present rotate"
+        Me.CheckBox3.UseVisualStyleBackColor = True
         '
         'Label62
         '
@@ -2551,15 +2566,23 @@ Partial Class Form1
         Me.TextBox49.TabIndex = 83
         Me.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'CheckBox3
+        'Button3
         '
-        Me.CheckBox3.AutoSize = True
-        Me.CheckBox3.Location = New System.Drawing.Point(423, 452)
-        Me.CheckBox3.Name = "CheckBox3"
-        Me.CheckBox3.Size = New System.Drawing.Size(92, 17)
-        Me.CheckBox3.TabIndex = 114
-        Me.CheckBox3.Text = "Present rotate"
-        Me.CheckBox3.UseVisualStyleBackColor = True
+        Me.Button3.Location = New System.Drawing.Point(520, 563)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(229, 42)
+        Me.Button3.TabIndex = 115
+        Me.Button3.Text = "test rotale"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'NumericUpDown5
+        '
+        Me.NumericUpDown5.Increment = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.NumericUpDown5.Location = New System.Drawing.Point(697, 576)
+        Me.NumericUpDown5.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
+        Me.NumericUpDown5.Name = "NumericUpDown5"
+        Me.NumericUpDown5.Size = New System.Drawing.Size(52, 20)
+        Me.NumericUpDown5.TabIndex = 116
         '
         'Form1
         '
@@ -2623,6 +2646,7 @@ Partial Class Form1
         Me.GroupBox4.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2848,4 +2872,6 @@ Partial Class Form1
     Friend WithEvents NumericUpDown4 As NumericUpDown
     Friend WithEvents Label62 As Label
     Friend WithEvents CheckBox3 As CheckBox
+    Friend WithEvents NumericUpDown5 As NumericUpDown
+    Friend WithEvents Button3 As Button
 End Class

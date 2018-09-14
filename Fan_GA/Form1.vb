@@ -734,6 +734,7 @@ Public Class Form1
         Calc_casing()
     End Sub
     'Opgelet de rotatie_hoek wordt in graden ingevuld
+    'Rotation cartesian coordinate system
     Private Function Rotate(ByVal input As Point, rotatie_hoek As Double) As Point
         Dim vektor_length, vektor_angle, new_angle As Double
         Dim neww As Point
@@ -741,6 +742,7 @@ Public Class Form1
 
         vektor_length = Sqrt(input.X ^ 2 + input.Y ^ 2)
         vektor_angle = Atan(input.Y / input.X) * 180 / PI
+        vektor_angle = Abs(vektor_angle)
 
         If input.X >= 0 And input.Y > 0 Then
             q = ("1 kw")
@@ -814,5 +816,19 @@ Public Class Form1
 
     Private Sub NumericUpDown4_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown4.ValueChanged
         Calc_casing()
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        'Dim n As Point
+        'Dim pic As Bitmap = New Bitmap(1000, 1000)
+
+        'n.X = 100
+        'n.Y = 100
+
+        'n = Rotate(n, NumericUpDown5.Value)
+        'n = Move_to_center(n)
+        'n = Check_inside_pic(n)
+        'pic.SetPixel(n.X, n.Y, Color.Yellow)
+        'PictureBox16.Image = pic
     End Sub
 End Class
