@@ -600,18 +600,17 @@ Public Class Form1
         Dim pic As Bitmap = New Bitmap(1000, 1000)
         Dim kleur As Color = Color.Yellow
 
-
         csv = String.Empty
         Double.TryParse(TextBox27.Text, r1) 'smal radius
         Double.TryParse(TextBox25.Text, r2) 'big radius
         Integer.TryParse(TextBox28.Text, inlet_d) 'big radius
 
         hook = NumericUpDown4.Value            'Rotation
-
+        TextBox58.Text = ""
         If r1 > 0 Then  'For fast program startup
             '======== volute =============
 
-            For i As Integer = 0 To 360 Step 5
+            For i As Double = 0 To 360 Step 10
                 r = r1 + i / 360 * (r2 - r1)
                 delta_y = r * Sin(i / 180 * PI)
                 delta_x = r * Cos(i / 180 * PI)
@@ -620,12 +619,22 @@ Public Class Form1
                 csv = csv & "volute, " & CInt(delta_x / onshape).ToString & ", " & CInt(delta_y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
 
                 '====== Picture box ========
+                'n.X = CInt(delta_x / pic_scale)
+                'n.Y = CInt(delta_y / pic_scale)
+
+                n.X = CInt(delta_x)
+                n.Y = CInt(delta_y)
+
+                'TextBox58.Text &= "Before rotate nx= " & n.X.ToString("0") & " ny=" & n.Y.ToString("0")
+                n = Rotate(n, hook) 'Problem in this function!!!!!!
+                'TextBox58.Text &= "  After nx= " & n.X.ToString("0") & " ny=" & n.Y.ToString("0") & vbCrLf
+
                 n.X = CInt(delta_x / pic_scale)
                 n.Y = CInt(delta_y / pic_scale)
 
-                n = Rotate(n, hook)
                 n = Move_to_center(n)
                 n = Check_inside_pic(n)
+
                 pic.SetPixel(n.X, n.Y, kleur)
                 PictureBox16.Image = pic
             Next
@@ -740,15 +749,17 @@ Public Class Form1
         Dim neww As Point
         Dim q As String = "-"
 
-        vektor_length = Sqrt(input.X ^ 2 + input.Y ^ 2)
-        vektor_angle = Atan(input.Y / input.X) * 180 / PI
-        vektor_angle = Abs(vektor_angle)
 
-        If input.X >= 0 And input.Y > 0 Then
+        vektor_length = Sqrt(CDbl(input.X) ^ 2 + CDbl(input.Y) ^ 2)
+        'vektor_angle = Atan(input.Y / input.X) * 180 / PI
+        vektor_angle = Asin(Abs(input.Y) / vektor_length) * 180 / PI
+
+
+        If input.X > 0 And input.Y > 0 Then
             q = ("1 kw")
             vektor_angle += 0
         End If
-        If input.X >= 0 And input.Y < 0 Then
+        If input.X > 0 And input.Y < 0 Then
             vektor_angle += 90
             q = ("2 kw")
         End If
@@ -762,6 +773,7 @@ Public Class Form1
         End If
 
         new_angle = rotatie_hoek + vektor_angle
+        TextBox58.Text &= "Hoek rotatie= " & rotatie_hoek.ToString("0") & " vektorhoek=" & vektor_angle.ToString("0") & " V_length" & vektor_length.ToString("0") & vbCrLf
 
         neww.X = CInt(vektor_length * Cos(new_angle / 180 * PI))
         neww.Y = CInt(vektor_length * Sin(new_angle / 180 * PI))

@@ -208,6 +208,8 @@ Partial Class Form1
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.NumericUpDown5 = New System.Windows.Forms.NumericUpDown()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.Label62 = New System.Windows.Forms.Label()
         Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
@@ -244,8 +246,7 @@ Partial Class Form1
         Me.Label109 = New System.Windows.Forms.Label()
         Me.Label108 = New System.Windows.Forms.Label()
         Me.TextBox49 = New System.Windows.Forms.TextBox()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.NumericUpDown5 = New System.Windows.Forms.NumericUpDown()
+        Me.TextBox58 = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -281,12 +282,12 @@ Partial Class Form1
         Me.TabPage9.SuspendLayout()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage10.SuspendLayout()
+        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -2177,6 +2178,7 @@ Partial Class Form1
         '
         'TabPage10
         '
+        Me.TabPage10.Controls.Add(Me.TextBox58)
         Me.TabPage10.Controls.Add(Me.NumericUpDown5)
         Me.TabPage10.Controls.Add(Me.Button3)
         Me.TabPage10.Controls.Add(Me.CheckBox3)
@@ -2198,6 +2200,24 @@ Partial Class Form1
         Me.TabPage10.TabIndex = 9
         Me.TabPage10.Text = "ONSHAPE"
         Me.TabPage10.UseVisualStyleBackColor = True
+        '
+        'NumericUpDown5
+        '
+        Me.NumericUpDown5.Increment = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.NumericUpDown5.Location = New System.Drawing.Point(697, 576)
+        Me.NumericUpDown5.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
+        Me.NumericUpDown5.Name = "NumericUpDown5"
+        Me.NumericUpDown5.Size = New System.Drawing.Size(52, 20)
+        Me.NumericUpDown5.TabIndex = 116
+        '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(520, 563)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(229, 42)
+        Me.Button3.TabIndex = 115
+        Me.Button3.Text = "test rotale"
+        Me.Button3.UseVisualStyleBackColor = True
         '
         'CheckBox3
         '
@@ -2566,23 +2586,14 @@ Partial Class Form1
         Me.TextBox49.TabIndex = 83
         Me.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Button3
+        'TextBox58
         '
-        Me.Button3.Location = New System.Drawing.Point(520, 563)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(229, 42)
-        Me.Button3.TabIndex = 115
-        Me.Button3.Text = "test rotale"
-        Me.Button3.UseVisualStyleBackColor = True
-        '
-        'NumericUpDown5
-        '
-        Me.NumericUpDown5.Increment = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.NumericUpDown5.Location = New System.Drawing.Point(697, 576)
-        Me.NumericUpDown5.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.NumericUpDown5.Name = "NumericUpDown5"
-        Me.NumericUpDown5.Size = New System.Drawing.Size(52, 20)
-        Me.NumericUpDown5.TabIndex = 116
+        Me.TextBox58.Location = New System.Drawing.Point(19, 433)
+        Me.TextBox58.Multiline = True
+        Me.TextBox58.Name = "TextBox58"
+        Me.TextBox58.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.TextBox58.Size = New System.Drawing.Size(338, 86)
+        Me.TextBox58.TabIndex = 117
         '
         'Form1
         '
@@ -2639,6 +2650,7 @@ Partial Class Form1
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage10.ResumeLayout(False)
         Me.TabPage10.PerformLayout()
+        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2646,7 +2658,6 @@ Partial Class Form1
         Me.GroupBox4.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2874,4 +2885,5 @@ Partial Class Form1
     Friend WithEvents CheckBox3 As CheckBox
     Friend WithEvents NumericUpDown5 As NumericUpDown
     Friend WithEvents Button3 As Button
+    Friend WithEvents TextBox58 As TextBox
 End Class
