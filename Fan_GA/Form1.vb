@@ -364,7 +364,7 @@ Public Class Form1
     }
 
     Public Shared _mid As Point
-    Public Shared pic_scale As Integer
+    Public Shared _pic_scale As Double
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim ListView1 As ListView
@@ -373,24 +373,6 @@ Public Class Form1
             .Size = New Size(150, 150)
         }
         Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB")
-        'Dim bm ASBitmap = Image.FromFile("C:\Repos\Fan_GA\BD.png")
-
-        Me.Controls.Add(ListView1)
-        'Creating the list items
-        Dim ListItem1 As ListViewItem
-        ListItem1 = ListView1.Items.Add("Item 1")
-
-        Dim ListItem2 As ListViewItem
-        ListItem2 = ListView1.Items.Add("Item 2")
-
-        Dim ListItem3 As ListViewItem
-        ListItem3 = ListView1.Items.Add("Item 3")
-
-        Dim ListItem4 As ListViewItem
-        ListItem4 = ListView1.Items.Add("Item 4")
-        'set the view property
-
-        ListView1.View = View.SmallIcon
 
         '-------Fill motor combobox, group------------------
         Dim words() As String
@@ -442,13 +424,14 @@ Public Class Form1
         _mid.X = CInt(PictureBox16.Width / 2)   'Midpoint canvas
         _mid.Y = CInt(PictureBox16.Height / 2)  'Midpoint canvas
 
-        pic_scale = CInt(NumericUpDown3.Value)
+        _pic_scale = CInt(NumericUpDown3.Value)
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
         Dim words() As String
         Dim separators() As String = {";"}
 
+        '===== motor diemnsions =======
         words = emotor(ComboBox1.SelectedIndex).Split(separators, StringSplitOptions.None)
         TextBox3.Text = words(0)
         TextBox4.Text = words(1)
@@ -597,7 +580,7 @@ Public Class Form1
         Dim inlet_d As Integer
         Dim onshape As Double = 1000 'Dimension in [m]
         '================
-        Dim pic As Bitmap = New Bitmap(1000, 1000)
+        Dim pic As Bitmap = New Bitmap(1000, 1000)  'New Clean Sheet
         Dim kleur As Color = Color.Yellow
 
         csv = String.Empty
@@ -605,12 +588,14 @@ Public Class Form1
         Double.TryParse(TextBox25.Text, r2) 'big radius
         Integer.TryParse(TextBox28.Text, inlet_d) 'big radius
 
-        hook = NumericUpDown4.Value            'Rotation
-        TextBox58.Text = ""
+        hook = NumericUpDown4.Value             'Rotation
+        _pic_scale = NumericUpDown3.Value       'Picture scale
+
+        TextBox58.Text = "" 'Read out for testing
         If r1 > 0 Then  'For fast program startup
             '======== volute =============
 
-            For i As Double = 0 To 360 Step 10
+            For i As Double = 1 To 360 Step 2
                 r = r1 + i / 360 * (r2 - r1)
                 delta_y = r * Sin(i / 180 * PI)
                 delta_x = r * Cos(i / 180 * PI)
@@ -619,21 +604,13 @@ Public Class Form1
                 csv = csv & "volute, " & CInt(delta_x / onshape).ToString & ", " & CInt(delta_y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
 
                 '====== Picture box ========
-                'n.X = CInt(delta_x / pic_scale)
-                'n.Y = CInt(delta_y / pic_scale)
-
                 n.X = CInt(delta_x)
                 n.Y = CInt(delta_y)
 
-                'TextBox58.Text &= "Before rotate nx= " & n.X.ToString("0") & " ny=" & n.Y.ToString("0")
-                n = Rotate(n, hook) 'Problem in this function!!!!!!
-                'TextBox58.Text &= "  After nx= " & n.X.ToString("0") & " ny=" & n.Y.ToString("0") & vbCrLf
-
-                n.X = CInt(delta_x / pic_scale)
-                n.Y = CInt(delta_y / pic_scale)
-
-                n = Move_to_center(n)
-                n = Check_inside_pic(n)
+                n = Rotate(n, hook)             'Rotate
+                n.X = CInt(n.X / _pic_scale)    'Scale x for picturebox
+                n.Y = CInt(n.Y / _pic_scale)    'Scale y for picturebox
+                n = Move_to_center(n)           'Move for picturebox
 
                 pic.SetPixel(n.X, n.Y, kleur)
                 PictureBox16.Image = pic
@@ -649,11 +626,8 @@ Public Class Form1
             a.X = CInt(p)
             a.Y = CInt(q + s / 2)
 
-            'MessageBox.Show("voor " & a.X.ToString & ", " & a.Y.ToString)
-
             a = Rotate(a, hook)
             a = Move_to_center(a)
-            'MessageBox.Show("na   " & a.X.ToString & ", " & a.Y.ToString)
 
             '==== end point flange =====
             b.X = CInt(p)
@@ -665,7 +639,7 @@ Public Class Form1
             csv = csv & "volute, " & CInt(b.X / onshape).ToString & ", " & CInt(b.Y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
 
             Draw_line(pic, CInt(a.X), CInt(a.Y), CInt(b.X), CInt(b.Y))  'Picture outlet flange
-            Label57.Text = "x=" & a.X.ToString & "," & a.Y.ToString & " y=" & b.X.ToString & "," & b.Y.ToString
+            'Label57.Text = "x=" & a.X.ToString & "," & a.Y.ToString & " y=" & b.X.ToString & "," & b.Y.ToString
             'Label57.Text = "p=" & p.ToString & " q=" & q.ToString & " s=" & s.ToString
 
             '======== inlet flange diameter =============
@@ -679,13 +653,14 @@ Public Class Form1
             Draw_circle(pic, inlet_d / 2)        'Picture Inlet flange
         End If
     End Sub
+
     Private Sub Draw_circle(ByVal pic As Bitmap, ByVal c_radius As Double)
         Dim n As Point
         Dim c As Color = Color.White
 
         For i As Integer = 0 To 360 Step 5
-            n.X = CInt(_mid.X + (c_radius * Cos(i / 180 * PI)) / pic_scale)
-            n.Y = CInt(_mid.Y + (c_radius * Sin(i / 180 * PI)) / pic_scale)
+            n.X = CInt(_mid.X + (c_radius * Cos(i / 180 * PI)) / _pic_scale)
+            n.Y = CInt(_mid.Y + (c_radius * Sin(i / 180 * PI)) / _pic_scale)
 
             n = Check_inside_pic(n)
             pic.SetPixel(n.X, n.Y, c)
@@ -699,11 +674,11 @@ Public Class Form1
         Dim g As Graphics = Graphics.FromImage(pic)
         Dim myPen As Pen = New Pen(Color.Blue, 3)
 
-        p6.X = CInt(_mid.X - (x1 / pic_scale)) 'Start point
-        p6.Y = CInt(_mid.Y - (y1 / pic_scale)) 'Start point
+        p6.X = CInt(_mid.X - (x1 / _pic_scale)) 'Start point
+        p6.Y = CInt(_mid.Y - (y1 / _pic_scale)) 'Start point
 
-        p7.X = CInt(_mid.X - (x2 / pic_scale)) 'End point
-        p7.Y = CInt(_mid.Y - (y2 / pic_scale)) 'End point
+        p7.X = CInt(_mid.X - (x2 / _pic_scale)) 'End point
+        p7.Y = CInt(_mid.Y - (y2 / _pic_scale)) 'End point
 
         p6 = Check_inside_pic(p6)
         p7 = Check_inside_pic(p7)
@@ -749,34 +724,23 @@ Public Class Form1
         Dim neww As Point
         Dim q As String = "-"
 
-
         vektor_length = Sqrt(CDbl(input.X) ^ 2 + CDbl(input.Y) ^ 2)
-        'vektor_angle = Atan(input.Y / input.X) * 180 / PI
         vektor_angle = Asin(Abs(input.Y) / vektor_length) * 180 / PI
 
-
-        If input.X > 0 And input.Y > 0 Then
-            q = ("1 kw")
-            vektor_angle += 0
-        End If
-        If input.X > 0 And input.Y < 0 Then
-            vektor_angle += 90
-            q = ("2 kw")
-        End If
-        If input.X < 0 And input.Y < 0 Then
-            vektor_angle += 180
-            q = ("3 kw")
-        End If
-        If input.X < 0 And input.Y > 0 Then
-            vektor_angle += 270
-            q = ("4 kw")
-        End If
+        'CALCULATION IS DONE IN Q1 THEN WE ROTATE TO ACTUAL QUARTER
+        If input.X > 0 And input.Y > 0 Then vektor_angle += 0
+        If input.X > 0 And input.Y < 0 Then vektor_angle += 90
+        If input.X < 0 And input.Y < 0 Then vektor_angle += 180
+        If input.X < 0 And input.Y > 0 Then vektor_angle += 270
 
         new_angle = rotatie_hoek + vektor_angle
-        TextBox58.Text &= "Hoek rotatie= " & rotatie_hoek.ToString("0") & " vektorhoek=" & vektor_angle.ToString("0") & " V_length" & vektor_length.ToString("0") & vbCrLf
+        TextBox58.Text &= "Hoek rotatie= " & rotatie_hoek.ToString("0") & " vektorhoek=" & vektor_angle.ToString("0") & " V_length" & vektor_length.ToString("0") '& vbCrLf
 
         neww.X = CInt(vektor_length * Cos(new_angle / 180 * PI))
         neww.Y = CInt(vektor_length * Sin(new_angle / 180 * PI))
+
+        TextBox58.Text &= " neww.x= " & neww.X.ToString("0") & " neww.Y=" & neww.Y.ToString("0") & vbCrLf
+
 
         Dim s As String
         s = "Input vektor= " & input.X.ToString & ", " & input.Y.ToString & vbCrLf
@@ -796,8 +760,8 @@ Public Class Form1
         w.X = _mid.X - f.X
         w.Y = _mid.Y - f.Y
 
-        'Still inside picture ?
-        w = Check_inside_pic(w)
+
+        w = Check_inside_pic(w) 'Still inside picture ?
         Return w
     End Function
 
@@ -822,7 +786,7 @@ Public Class Form1
             a = "too high"
         End If
 
-        Label57.Text = a
+        If a.Length > 5 Then TextBox58.Text &= a    'Only message if problem exists
         Return (p)
     End Function
 
@@ -830,17 +794,4 @@ Public Class Form1
         Calc_casing()
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        'Dim n As Point
-        'Dim pic As Bitmap = New Bitmap(1000, 1000)
-
-        'n.X = 100
-        'n.Y = 100
-
-        'n = Rotate(n, NumericUpDown5.Value)
-        'n = Move_to_center(n)
-        'n = Check_inside_pic(n)
-        'pic.SetPixel(n.X, n.Y, Color.Yellow)
-        'PictureBox16.Image = pic
-    End Sub
 End Class

@@ -208,14 +208,10 @@ Partial Class Form1
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
-        Me.NumericUpDown5 = New System.Windows.Forms.NumericUpDown()
-        Me.Button3 = New System.Windows.Forms.Button()
+        Me.TextBox58 = New System.Windows.Forms.TextBox()
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.Label62 = New System.Windows.Forms.Label()
         Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
-        Me.Label57 = New System.Windows.Forms.Label()
-        Me.Label55 = New System.Windows.Forms.Label()
-        Me.Label53 = New System.Windows.Forms.Label()
         Me.Label49 = New System.Windows.Forms.Label()
         Me.NumericUpDown3 = New System.Windows.Forms.NumericUpDown()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
@@ -246,7 +242,6 @@ Partial Class Form1
         Me.Label109 = New System.Windows.Forms.Label()
         Me.Label108 = New System.Windows.Forms.Label()
         Me.TextBox49 = New System.Windows.Forms.TextBox()
-        Me.TextBox58 = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -282,7 +277,6 @@ Partial Class Form1
         Me.TabPage9.SuspendLayout()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage10.SuspendLayout()
-        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2179,14 +2173,9 @@ Partial Class Form1
         'TabPage10
         '
         Me.TabPage10.Controls.Add(Me.TextBox58)
-        Me.TabPage10.Controls.Add(Me.NumericUpDown5)
-        Me.TabPage10.Controls.Add(Me.Button3)
         Me.TabPage10.Controls.Add(Me.CheckBox3)
         Me.TabPage10.Controls.Add(Me.Label62)
         Me.TabPage10.Controls.Add(Me.NumericUpDown4)
-        Me.TabPage10.Controls.Add(Me.Label57)
-        Me.TabPage10.Controls.Add(Me.Label55)
-        Me.TabPage10.Controls.Add(Me.Label53)
         Me.TabPage10.Controls.Add(Me.Label49)
         Me.TabPage10.Controls.Add(Me.NumericUpDown3)
         Me.TabPage10.Controls.Add(Me.PictureBox16)
@@ -2201,23 +2190,14 @@ Partial Class Form1
         Me.TabPage10.Text = "ONSHAPE"
         Me.TabPage10.UseVisualStyleBackColor = True
         '
-        'NumericUpDown5
+        'TextBox58
         '
-        Me.NumericUpDown5.Increment = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.NumericUpDown5.Location = New System.Drawing.Point(697, 576)
-        Me.NumericUpDown5.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.NumericUpDown5.Name = "NumericUpDown5"
-        Me.NumericUpDown5.Size = New System.Drawing.Size(52, 20)
-        Me.NumericUpDown5.TabIndex = 116
-        '
-        'Button3
-        '
-        Me.Button3.Location = New System.Drawing.Point(520, 563)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(229, 42)
-        Me.Button3.TabIndex = 115
-        Me.Button3.Text = "test rotale"
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.TextBox58.Location = New System.Drawing.Point(19, 529)
+        Me.TextBox58.Multiline = True
+        Me.TextBox58.Name = "TextBox58"
+        Me.TextBox58.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.TextBox58.Size = New System.Drawing.Size(804, 86)
+        Me.TextBox58.TabIndex = 117
         '
         'CheckBox3
         '
@@ -2247,36 +2227,6 @@ Partial Class Form1
         Me.NumericUpDown4.Name = "NumericUpDown4"
         Me.NumericUpDown4.Size = New System.Drawing.Size(75, 20)
         Me.NumericUpDown4.TabIndex = 112
-        '
-        'Label57
-        '
-        Me.Label57.AutoSize = True
-        Me.Label57.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label57.Location = New System.Drawing.Point(382, 582)
-        Me.Label57.Name = "Label57"
-        Me.Label57.Size = New System.Drawing.Size(65, 18)
-        Me.Label57.TabIndex = 110
-        Me.Label57.Text = "Smallest"
-        '
-        'Label55
-        '
-        Me.Label55.AutoSize = True
-        Me.Label55.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label55.Location = New System.Drawing.Point(382, 550)
-        Me.Label55.Name = "Label55"
-        Me.Label55.Size = New System.Drawing.Size(65, 18)
-        Me.Label55.TabIndex = 109
-        Me.Label55.Text = "Smallest"
-        '
-        'Label53
-        '
-        Me.Label53.AutoSize = True
-        Me.Label53.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label53.Location = New System.Drawing.Point(382, 522)
-        Me.Label53.Name = "Label53"
-        Me.Label53.Size = New System.Drawing.Size(65, 18)
-        Me.Label53.TabIndex = 108
-        Me.Label53.Text = "Smallest"
         '
         'Label49
         '
@@ -2380,7 +2330,7 @@ Partial Class Form1
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(19, 550)
+        Me.Button2.Location = New System.Drawing.Point(19, 425)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(267, 68)
         Me.Button2.TabIndex = 90
@@ -2586,15 +2536,6 @@ Partial Class Form1
         Me.TextBox49.TabIndex = 83
         Me.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'TextBox58
-        '
-        Me.TextBox58.Location = New System.Drawing.Point(19, 433)
-        Me.TextBox58.Multiline = True
-        Me.TextBox58.Name = "TextBox58"
-        Me.TextBox58.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox58.Size = New System.Drawing.Size(338, 86)
-        Me.TextBox58.TabIndex = 117
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2650,7 +2591,6 @@ Partial Class Form1
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage10.ResumeLayout(False)
         Me.TabPage10.PerformLayout()
-        CType(Me.NumericUpDown5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2877,13 +2817,8 @@ Partial Class Form1
     Friend WithEvents NumericUpDown3 As NumericUpDown
     Friend WithEvents Label51 As Label
     Friend WithEvents TextBox57 As TextBox
-    Friend WithEvents Label55 As Label
-    Friend WithEvents Label53 As Label
-    Friend WithEvents Label57 As Label
     Friend WithEvents NumericUpDown4 As NumericUpDown
     Friend WithEvents Label62 As Label
     Friend WithEvents CheckBox3 As CheckBox
-    Friend WithEvents NumericUpDown5 As NumericUpDown
-    Friend WithEvents Button3 As Button
     Friend WithEvents TextBox58 As TextBox
 End Class
