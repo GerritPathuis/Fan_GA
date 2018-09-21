@@ -591,7 +591,8 @@ Public Class Form1
         hook = NumericUpDown4.Value             'Rotation
         _pic_scale = NumericUpDown3.Value       'Picture scale
 
-        TextBox58.Text = "" 'Read out for testing
+        TextBox58.Text = "Mid point= " & _mid.X.ToString("0") & "," & _mid.Y.ToString("0") & vbCrLf 'Read out for testing
+
         If r1 > 0 Then  'For fast program startup
             '======== volute =============
 
@@ -607,7 +608,7 @@ Public Class Form1
                 n.X = CInt(delta_x)
                 n.Y = CInt(delta_y)
 
-                n = Rotate(n, hook)             'Rotate
+                n = Rotate2(n, hook, i)            'Rotate
                 n.X = CInt(n.X / _pic_scale)    'Scale x for picturebox
                 n.Y = CInt(n.Y / _pic_scale)    'Scale y for picturebox
                 n = Move_to_center(n)           'Move for picturebox
@@ -639,8 +640,6 @@ Public Class Form1
             csv = csv & "volute, " & CInt(b.X / onshape).ToString & ", " & CInt(b.Y / onshape).ToString & ", " & CInt(0).ToString & vbCrLf
 
             Draw_line(pic, CInt(a.X), CInt(a.Y), CInt(b.X), CInt(b.Y))  'Picture outlet flange
-            'Label57.Text = "x=" & a.X.ToString & "," & a.Y.ToString & " y=" & b.X.ToString & "," & b.Y.ToString
-            'Label57.Text = "p=" & p.ToString & " q=" & q.ToString & " s=" & s.ToString
 
             '======== inlet flange diameter =============
             For i As Integer = 0 To 360
@@ -727,39 +726,78 @@ Public Class Form1
         vektor_length = Sqrt(CDbl(input.X) ^ 2 + CDbl(input.Y) ^ 2)
         vektor_angle = Asin(Abs(input.Y) / vektor_length) * 180 / PI
 
-        'CALCULATION IS DONE IN Q1 THEN WE ROTATE TO ACTUAL QUARTER
-        If input.X > 0 And input.Y > 0 Then vektor_angle += 0
-        If input.X > 0 And input.Y < 0 Then vektor_angle += 90
-        If input.X < 0 And input.Y < 0 Then vektor_angle += 180
-        If input.X < 0 And input.Y > 0 Then vektor_angle += 270
+        If vektor_length > 1 Then
 
-        new_angle = rotatie_hoek + vektor_angle
-        TextBox58.Text &= "Hoek rotatie= " & rotatie_hoek.ToString("0") & " vektorhoek=" & vektor_angle.ToString("0") & " V_length" & vektor_length.ToString("0") '& vbCrLf
-
-        neww.X = CInt(vektor_length * Cos(new_angle / 180 * PI))
-        neww.Y = CInt(vektor_length * Sin(new_angle / 180 * PI))
-
-        TextBox58.Text &= " neww.x= " & neww.X.ToString("0") & " neww.Y=" & neww.Y.ToString("0") & vbCrLf
+            'CALCULATION IS DONE IN Q1 THEN WE ROTATE TO ACTUAL QUARTER
+            'If input.X > 0 And input.Y > 0 Then vektor_angle += 0
+            'If input.X > 0 And input.Y < 0 Then vektor_angle += 90
+            'If input.X < 0 And input.Y < 0 Then vektor_angle += 180
+            'If input.X < 0 And input.Y > 0 Then vektor_angle += 270
 
 
-        Dim s As String
-        s = "Input vektor= " & input.X.ToString & ", " & input.Y.ToString & vbCrLf
-        s &= "vektor length= " & vektor_length.ToString("0") & " vektor angle= " & vektor_angle.ToString("0") & vbCrLf
-        s &= "rotatiehoek= " & rotatie_hoek.ToString("0") & vbCrLf
-        s &= "result vektor= " & neww.X.ToString & ", " & neww.Y.ToString & vbCrLf
-        s &= "berekende hoek= " & vektor_angle.ToString("0") & ", newhook= " & new_angle.ToString("0") & vbCrLf
-        s &= "kwadrant= " & q
+            If input.X > 0 And input.Y > 0 Then vektor_angle -= 0
+            If input.X < 0 And input.Y > 0 Then vektor_angle -= 90
+            If input.X < 0 And input.Y < 0 Then vektor_angle -= 180
+            If input.X > 0 And input.Y < 0 Then vektor_angle -= 270
 
-        If CheckBox3.Checked Then MessageBox.Show(s)
+
+
+
+            new_angle = rotatie_hoek + vektor_angle
+            'TextBox58.Text &= "Hoek rotatie= " & rotatie_hoek.ToString("0") & " vektorhoek=" & vektor_angle.ToString("0") & " V_length" & vektor_length.ToString("0") '& vbCrLf
+
+            neww.X = CInt(vektor_length * Cos(new_angle / 180 * PI))
+            neww.Y = CInt(vektor_length * Sin(new_angle / 180 * PI))
+
+            'TextBox58.Text &= " neww.x= " & neww.X.ToString("0") & " neww.Y=" & neww.Y.ToString("0") & vbCrLf
+
+
+            Dim s As String
+            s = "Input vektor= " & input.X.ToString & ", " & input.Y.ToString & vbCrLf
+            s &= "vektor length= " & vektor_length.ToString("0") & " vektor angle= " & vektor_angle.ToString("0") & vbCrLf
+            s &= "rotatiehoek= " & rotatie_hoek.ToString("0") & vbCrLf
+            s &= "result vektor= " & neww.X.ToString & ", " & neww.Y.ToString & vbCrLf
+            s &= "berekende hoek= " & vektor_angle.ToString("0") & ", newhook= " & new_angle.ToString("0") & vbCrLf
+            s &= "kwadrant= " & q
+        Else
+            neww.X = 0
+            neww.Y = 0
+        End If
+
         Return neww
     End Function
+    Private Function Rotate2(ByVal input As Point, rhoek As Double, va As Double) As Point
+        'https://en.wikipedia.org/wiki/Cartesian_coordinate_system
+        Dim neww As Point
+        Dim le, hoek2 As Double
+
+        le = Sqrt(CDbl(input.X) ^ 2 + CDbl(input.Y) ^ 2)
+        rhoek = rhoek / 180 * PI            '[radiaal] rotatie
+        va = va / 180 * PI                  '[radiaal] orginele vektor hoek
+        hoek2 = (rhoek + va)                '[radiaal]
+
+        neww.X = CInt(le * Cos(hoek2))
+        neww.Y = CInt(le * Sin(hoek2))
+
+        If neww.X < 0 Then neww.X *= -1
+
+        TextBox58.Text &= "input.x= " & input.X.ToString("0") & "[mm] "
+        TextBox58.Text &= "input.Y= " & input.Y.ToString("0") & "[mm] "
+        ' TextBox58.Text &= "Rot-hoek= " & rhoek.ToString("0.00") & "[rad] "
+        TextBox58.Text &= " vektor-hoek=" & va.ToString("0.00") & "[rad] "
+        TextBox58.Text &= " V_length" & le.ToString("0") & "[mm] "
+        TextBox58.Text &= " Hoek2= " & hoek2.ToString("0.00") & "[rad] "
+        TextBox58.Text &= " neww.X= " & neww.X.ToString("0.00") & "[mm] "
+        TextBox58.Text &= " neww.Y= " & neww.Y.ToString("0.00") & "[mm] " & vbCrLf
+        Return neww
+    End Function
+
     Private Function Move_to_center(ByVal f As Point) As Point
         Dim w As Point
 
         'Move to center picture
         w.X = _mid.X - f.X
         w.Y = _mid.Y - f.Y
-
 
         w = Check_inside_pic(w) 'Still inside picture ?
         Return w
